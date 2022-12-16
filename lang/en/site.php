@@ -150,6 +150,32 @@ return [
     'apartment_create' => "Apartment Created Successfully",
     'add_apartment' => "Add Apartment",
     'search_apartments' => 'Search Apartments',
+    'space' => 'Apartment Space',
+    'floor' => 'Floor Number',
+    'bedroom' => 'Bedroom Number',
+
+    'bathroom' => 'Bathroom Number',
+    'councils' => 'Councils',
+    'lounges' => 'Lounges',
+    'furnishing_condition' => 'Furnishing Condition',
+    'electricity_meter_number' => 'Electricity meter number',
+    'water_meter_number' => 'Water Meter Number',
+    'parking' => 'Parking',
+    'type_of_kitchen' => 'Type of kitchen',
+    'type_of_air_conditioning' => 'Type Of Air Conditioning',
+
+    'window' => 'Window',
+    'split' => 'Split',
+    'central' => 'Central',
+    'not_available' => 'Not Available',
+
+
+    'open' => 'Open',
+    'closed' => 'Closed',
+
+
+    'yes' => 'Yes',
+    'no' => 'No',
 
 
     'submit' => 'Submit',
