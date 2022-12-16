@@ -218,7 +218,7 @@
                         </div>
                     </div><br>
                     <!--end::apartment councils and bathroom number-->
-
+{{-- // --}}
                     <!--begin::apartment lounges and Furnishing condition -->
                     <div class="row">
                         <div class="col-lg-6 fv-row">
