@@ -119,6 +119,9 @@ return [
     "estates" => "العقارات",
     "building" => "العمارات",
     "apartments" => "الوحدات السكنية",
+    "one_apartment" => " شقة",
+    "villa" => "فيلا",
+    "a_land" => "ارض",
 
     ////
     'add' => 'اضف',

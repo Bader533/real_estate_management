@@ -126,6 +126,12 @@ return [
     "estates" => "Estates",
     "building" => "Building",
     "apartments" => "Apartments",
+    "one_apartment" => " Apartment",
+    "villa" => "Villa",
+    "a_land" => "A land",
+
+
+
     'compound_update' => 'Compound Updated Successfully',
     'compound_create' => 'Compound Created Successfully',
     'search_Compounds' => 'Search Compounds',
