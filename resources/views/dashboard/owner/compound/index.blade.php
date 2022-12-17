@@ -6,6 +6,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
 @if (app()->getLocale() == 'ar')
 <style>
     #kt_content_container {
@@ -14,42 +15,7 @@
 </style>
 @endif
 <style>
-    img {
-        max-width: 100%;
-    }
 
-    #home-tab2 {
-        border-radius: 20px;
-        padding: 10px 0px;
-    }
-
-    #pillNav2 {
-        border-radius: 30px;
-    }
-
-    div>H5 {
-        padding-bottom: 4px;
-    }
-
-    ul {
-        padding: 0;
-        margin: 0;
-        list-style: none;
-    }
-
-    li {
-        padding-bottom: 2px;
-    }
-
-    #div_card {
-        background-color: #F3F4F6;
-        margin-right: 10px;
-        margin-left: 10px;
-    }
-
-    #div_content {
-        margin-bottom: 10px;
-    }
 </style>
 @endsection
 

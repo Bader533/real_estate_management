@@ -1,152 +1,139 @@
-/* @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;300;400;700&display=swap'); */
+    /* ////// page for building and compound and apartment ////// */
+    img {
+      max-width: 100%;
+    }
 
-* {
-    box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
-    font-family: 'Roboto', sans-serif;}
+    #home-tab2 {
+      border-radius: 20px;
+      padding: 10px 0px;
+    }
 
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Montserrat', sans-serif;
-    font-family: 'Roboto', sans-serif;
+    #pillNav2 {
+      border-radius: 30px;
+    }
 
-}
+    div>H5 {
+      padding-bottom: 4px;
+    }
 
-img {
-    max-width: 100%;
-}
+    ul {
+      padding: 0;
+      margin: 0;
+      list-style: none;
+    }
 
-ul {
-    padding: 0;
-    margin: 0;
-    list-style: none;
-}
+    li {
+      padding-bottom: 2px;
+    }
 
-a {
-    text-decoration: none;
-}
+    #div_card {
+      background-color: #F3F4F6;
+      margin-right: 10px;
+      margin-left: 10px;
+    }
 
-/* .container {
-    width: 90%;
-    margin: 0 auto;
-} */
-/* 
-.content {
-    display: flex;
-    justify-content: space-between;
-} */
+    #div_content {
+      margin-bottom: 10px;
+    }
+/* ////// page for building and compound and apartment ////// */
 
+/* ////// page for create apartment ////// */
+        #a_tag_right {
+          border-top-right-radius: 0px;
+          border-bottom-right-radius: 0px;
+        }
 
-.header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    
-  }
+        #a_tag_left {
+          border-top-left-radius: 0px;
+          border-bottom-left-radius: 0px;
+        }
 
-  div.header h3 {
-    color: #1b8859;
-    font-weight: bold;
-  }
+        #div_radio {
+          width: 100%;
+        }
 
-  
-.btn {
-    box-sizing: border-box;
-    background-color: transparent;
-    border: 2px solid #1b8859;
-    border-radius: 0.6em;
-    color: #1b8859;
-    cursor: pointer;
-    /* display: flex;
-    align-self: center;
-    font-size: 1rem;
-    font-weight: 400;
-    line-height: 1; */
-    margin: 20px 2px;
-    padding: 7px;
-    text-decoration: none;
-    text-align: center;
-    /* text-transform: uppercase; */
-    /* font-family: "Montserrat", sans-serif; */
-    font-weight: 700;
-  }
-  .btn:hover, .btn:focus {
-    color: #fff;
-    outline: 0;
-  }
-  
-  .first {
-    transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
-  }
-  .first:hover {
-    box-shadow: 0 0 40px 40px #1b8859 inset;
-  }
+        #div_radio1 {
+          width: 100%;
+          column-gap: 8px;
+        }
 
+        #div_radio1 {
+          display: flex;
+        }
 
+        .input_radio {
+          flex: 1;
+          display: none;
+          width: 50px;
+        }
 
-.third {
-    border-color: #1b8859;
-    color: #fff;
-    box-shadow: 0 0 40px 40px #1b8859 inset, 0 0 0 0 #1b8859;
-    transition: all 150ms ease-in-out;
-  }
-  .third:hover {
-    box-shadow: 0 0 10px 0 #1b8859 inset, 0 0 10px 4px #1b8859;
-  }
+        .radio_label {
+          background-color: #F5F8FA;
+          position: relative;
+          color: #7E8299;
+          font-size: 17px;
+          font-weight: 200;
+          font-family: sans-serif;
+          padding: 10px 10px;
+          border-radius: 8px;
+          width: 33%;
+          text-align: center;
 
+        }
 
+        .radio_label:hover {
+          background-color: #009ef6;
+          color: white;
+          border: white;
+        }
 
+        .input_radio:checked+.radio_label {
+          background-color: #009ef6;
+          border: white;
+          color: white;
+        }
 
+        /* //// */
+        #div_radio_2 {
+          display: flex;
+        }
 
-.data-head {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        .input_radio_2 {
+          flex: 1;
+          display: none;
+          width: 100%;
+        }
 
+        .radio_label_2 {
+          background-color: #F5F8FA;
+          position: relative;
+          color: #7E8299;
+          font-size: 17px;
+          font-weight: 200;
+          font-family: sans-serif;
+          padding: 10px 10px;
+          width: 50%;
+          text-align: center;
 
-.data-head div {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
+        }
 
-.data-head div button {
-    margin-left: 15px;
-}
+        .radio_label_2:hover {
+          background-color: #009ef6;
+          color: white;
+          border: white;
+        }
 
-button.nav-link {
-  color: #1b8859;
-  font-size: large;
-  font-family: 'Montserrat', sans-serif;
-  font-family: 'Roboto', sans-serif;
-  font-weight: bold;
-
-}
-
-button.nav-link:hover {
-  color: #125b3b;
-}
-
-
-.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
-  background-color: #1b8859;
-  color: white;
+        .input_radio_2:checked+.radio_label_2 {
+          background-color: #009ef6;
+          border: white;
+          color: white;
+        }
 
 
-}
 
-button.third:hover {
-  color: #1b8859;
-}
-
-button.dropdown-toggle:hover{
-  color: white;
-  background-color: #1b8859;
-
-}
-
-/* [type=button]:not(:disabled), [type=reset]:not(:disabled), [type=submit]:not(:disabled), button:not(:disabled):hover {
-  color: #1b8859;
-} */
+        @media only screen and (max-width: 667px) {
+          #div_radio {
+            width: 100%;
+          }
+        }
+/* ////// page for create apartment ////// */
