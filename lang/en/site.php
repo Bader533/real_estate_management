@@ -75,7 +75,7 @@ return [
     'comm' => 'Delivery Commission',
     'pdf' => 'pdf',
     'actions' => 'Actions',
-    'add_Compound' => 'Add Compound',
+    'add_compound' => 'Add Compound',
 
 
     'accountseller' => 'Accounts Seller',
@@ -119,7 +119,7 @@ return [
     "upload_images" => "Upload Images",
     "browse" => "Browse",
 
-    "compounds" => "The Compounds",
+    "compounds" => "Compounds",
     "add_new_compund" => "Add New Compund",
     "edit_compund_info" => "Edit Compund Information",
     "compund_info" => "Compund Information",
@@ -129,6 +129,8 @@ return [
     "one_apartment" => " Apartment",
     "villa" => "Villa",
     "a_land" => "A land",
+    "count" => "count",
+
 
 
 

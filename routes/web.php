@@ -53,6 +53,8 @@ Route::group(
 
         /* ************************** apartment ************************** */
         Route::resource('apartment', ApartmentController::class);
+        Route::delete('apartment/image/{id}', [BuildingController::class, 'deleteImage'])->name('apartment.image.delete');
+        Route::get('search/apartment', [BuildingController::class, 'search'])->name('apartment.search');
         /* ************************** end apartment ************************** */
 
         //delete images ..

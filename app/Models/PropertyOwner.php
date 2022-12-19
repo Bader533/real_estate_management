@@ -20,4 +20,9 @@ class PropertyOwner extends Authenticatable
     {
         return $this->hasMany(Building::class);
     }
+
+    public function apartments()
+    {
+        return $this->hasMany(Apartment::class);
+    }
 }
