@@ -15,7 +15,9 @@
 </style>
 @endif
 <style>
-
+    #home-tab2 {
+        font-size: 14px;
+    }
 </style>
 @endsection
 
@@ -29,7 +31,7 @@
 
             <div class="card-title">
                 <a href="#">
-                    <h3>Bildings</h3>
+                    <h3>{{__('site.compounds')}}</h3>
                 </a>
             </div>
 
@@ -49,10 +51,10 @@
                                 fill="#C4C4C4" />
                         </svg>
                     </span>
-                    <!--end::Svg Icon-->Export
+                    <!--end::Svg Icon-->Import
                 </button>
                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
-                    <a href="{{ route('building.create') }}" class="btn btn-primary">{{__('site.add_building')}}</a>
+                    <a href="{{ route('compound.create') }}" class="btn btn-primary">{{__('site.add_compound')}}</a>
 
                 </div>
             </div>
@@ -63,17 +65,18 @@
                 <div class="" id="div_tab">
                     <ul class="nav nav-pills nav-fill gap-2 p-1 small bg-white border rounded-5 shadow-sm  "
                         id="pillNav2" role="tablist">
-                        <li class="nav-item" role="presentation"><a href="#">
-                                <button class="nav-link rounded-5 " id="home-tab2" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="false" tabindex="-1">Data</button>
+                        <li class="nav-item" role="presentation"><a href="{{route('compound.index')}}">
+                                <button class="nav-link rounded-5 active" id="home-tab2" data-bs-toggle="tab"
+                                    type="button" role="tab" aria-selected="false"
+                                    tabindex="-1">{{__('site.compounds')}}</button>
                             </a> </li>
-                        <li class="nav-item" role="presentation"><a href="#">
-                                <button class="nav-link rounded-5  active " id="home-tab2" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="false" tabindex="-1">Data</button>
+                        <li class="nav-item" role="presentation"><a href="{{route('building.index')}}">
+                                <button class="nav-link rounded-5" id="home-tab2" data-bs-toggle="tab" type="button"
+                                    role="tab" aria-selected="false" tabindex="-1">{{__('site.building')}}</button>
                             </a></li>
-                        <li class="nav-item" role="presentation"><a href="#">
+                        <li class="nav-item" role="presentation"><a href="{{route('apartment.index')}}">
                                 <button class="nav-link rounded-5 " id="home-tab2" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="true"> Data </button>
+                                    role="tab" aria-selected="true"> {{__('site.apartments')}} </button>
                             </a></li>
                     </ul>
                 </div>
@@ -82,7 +85,7 @@
             <div id="add-search" class="card-header border-0 pt-5">
 
                 <div class="card-title">
-                    <small class="text-muted">count: 5</small>
+                    <small class="text-muted">{{__('site.count')}} : {{$compounds->count()}}</small>
                 </div>
 
                 <div class="card-toolbar">
@@ -99,58 +102,62 @@
                             </svg>
                         </span>
                         <!--end::Svg Icon-->
-                        <input type="text" data-kt-customer-table-filter="search"
-                            class="form-control form-control-solid w-250px ps-15" placeholder="Search Customers" />
+                        <input type="text" data-kt-customer-table-filter="search" id="search"
+                            class="form-control form-control-solid w-250px ps-15"
+                            placeholder="{{__('site.search_Compounds')}}" />
                     </div>
                 </div>
             </div><br>
             <div class="container text-center">
-                <div class="row row-cols-2">
+                <div class="row row-cols-2" id="div_content_data">
+                    @foreach ($compounds as $compound)
                     <div class="col" id="div_content" style=" padding: 0;">
                         <div class="card mb-3" id="div_card" style="">
                             <div class="row g-0">
                                 <div class="col-md-4">
-                                    <img src="https://via.placeholder.com/200" class="img-fluid rounded-start"
-                                        alt="...">
+                                    <img src="https://via.placeholder.com/200" style="height: 100%;"
+                                        class="img-fluid rounded-start" alt="...">
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
                                         <div style="display: flex; justify-content: space-between;">
-                                            <h5 class="card-title text-start ">Admin</h5>
-                                            <a href="#" style="text-decoration: none; color: #1b8859;">Edit</a>
+                                            <h5 class="card-title text-start ">{{$compound->name}}</h5>
+                                            <a href="{{route('compound.edit',$compound->id)}}"
+                                                style="text-decoration: none; color: #17191b;">Edit</a>
                                         </div>
                                         <ul class="text-start" style="list-style-type: none; padding: 0;">
                                             <li style="margin-bottom: 5px;">
                                                 <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 384 512">
                                                         <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                                         <path
                                                             d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z" />
                                                     </svg>
-                                                    user
+                                                    {{$compound->city}} , {{$compound->address}}
                                                 </p>
                                             </li>
                                             <li style="margin-bottom: 5px;">
                                                 <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 640 512">
                                                         <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                                         <path
                                                             d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z" />
                                                     </svg>
-                                                    location
+                                                    {{$compound->buildings->count()}}
                                                 </p>
                                             </li>
                                             <li style="margin-bottom: 5px;">
                                                 <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 384 512">
                                                         <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
                                                         <path
                                                             d="M88 104C88 95.16 95.16 88 104 88H152C160.8 88 168 95.16 168 104V152C168 160.8 160.8 168 152 168H104C95.16 168 88 160.8 88 152V104zM280 88C288.8 88 296 95.16 296 104V152C296 160.8 288.8 168 280 168H232C223.2 168 216 160.8 216 152V104C216 95.16 223.2 88 232 88H280zM88 232C88 223.2 95.16 216 104 216H152C160.8 216 168 223.2 168 232V280C168 288.8 160.8 296 152 296H104C95.16 296 88 288.8 88 280V232zM280 216C288.8 216 296 223.2 296 232V280C296 288.8 288.8 296 280 296H232C223.2 296 216 288.8 216 280V232C216 223.2 223.2 216 232 216H280zM0 64C0 28.65 28.65 0 64 0H320C355.3 0 384 28.65 384 64V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64zM48 64V448C48 456.8 55.16 464 64 464H144V400C144 373.5 165.5 352 192 352C218.5 352 240 373.5 240 400V464H320C328.8 464 336 456.8 336 448V64C336 55.16 328.8 48 320 48H64C55.16 48 48 55.16 48 64z" />
                                                     </svg>
-                                                    This is a wider card
+                                                    {{-- {{$compound->apartments->count()}} --}}
+                                                    0
                                                 </p>
                                             </li>
                                         </ul>
@@ -159,328 +166,18 @@
                             </div>
                         </div>
                     </div>
-
-                    <div class="col" id="div_content" style=" padding: 0;">
-                        <div class="card mb-3" id="div_card" style="">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="https://via.placeholder.com/200" class="img-fluid rounded-start"
-                                        alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <h5 class="card-title text-start ">Admin</h5>
-                                            <a href="#" style="text-decoration: none; color: #1b8859;">Edit</a>
-                                        </div>
-                                        <ul class="text-start" style="list-style-type: none; padding: 0;">
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 384 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z" />
-                                                    </svg>
-                                                    user
-                                                </p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 640 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z" />
-                                                    </svg>
-                                                    location
-                                                </p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 384 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M88 104C88 95.16 95.16 88 104 88H152C160.8 88 168 95.16 168 104V152C168 160.8 160.8 168 152 168H104C95.16 168 88 160.8 88 152V104zM280 88C288.8 88 296 95.16 296 104V152C296 160.8 288.8 168 280 168H232C223.2 168 216 160.8 216 152V104C216 95.16 223.2 88 232 88H280zM88 232C88 223.2 95.16 216 104 216H152C160.8 216 168 223.2 168 232V280C168 288.8 160.8 296 152 296H104C95.16 296 88 288.8 88 280V232zM280 216C288.8 216 296 223.2 296 232V280C296 288.8 288.8 296 280 296H232C223.2 296 216 288.8 216 280V232C216 223.2 223.2 216 232 216H280zM0 64C0 28.65 28.65 0 64 0H320C355.3 0 384 28.65 384 64V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64zM48 64V448C48 456.8 55.16 464 64 464H144V400C144 373.5 165.5 352 192 352C218.5 352 240 373.5 240 400V464H320C328.8 464 336 456.8 336 448V64C336 55.16 328.8 48 320 48H64C55.16 48 48 55.16 48 64z" />
-                                                    </svg>
-                                                    This is a wider card
-                                                </p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col" id="div_content" style=" padding: 0;">
-                        <div class="card mb-3" id="div_card" style="">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="https://via.placeholder.com/200" class="img-fluid rounded-start"
-                                        alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <h5 class="card-title text-start ">Admin</h5>
-                                            <a href="#" style="text-decoration: none; color: #1b8859;">Edit</a>
-                                        </div>
-                                        <ul class="text-start" style="list-style-type: none; padding: 0;">
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 384 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z" />
-                                                    </svg>
-                                                    user
-                                                </p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 640 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z" />
-                                                    </svg>
-                                                    location
-                                                </p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 384 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M88 104C88 95.16 95.16 88 104 88H152C160.8 88 168 95.16 168 104V152C168 160.8 160.8 168 152 168H104C95.16 168 88 160.8 88 152V104zM280 88C288.8 88 296 95.16 296 104V152C296 160.8 288.8 168 280 168H232C223.2 168 216 160.8 216 152V104C216 95.16 223.2 88 232 88H280zM88 232C88 223.2 95.16 216 104 216H152C160.8 216 168 223.2 168 232V280C168 288.8 160.8 296 152 296H104C95.16 296 88 288.8 88 280V232zM280 216C288.8 216 296 223.2 296 232V280C296 288.8 288.8 296 280 296H232C223.2 296 216 288.8 216 280V232C216 223.2 223.2 216 232 216H280zM0 64C0 28.65 28.65 0 64 0H320C355.3 0 384 28.65 384 64V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64zM48 64V448C48 456.8 55.16 464 64 464H144V400C144 373.5 165.5 352 192 352C218.5 352 240 373.5 240 400V464H320C328.8 464 336 456.8 336 448V64C336 55.16 328.8 48 320 48H64C55.16 48 48 55.16 48 64z" />
-                                                    </svg>
-                                                    This is a wider card
-                                                </p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col" id="div_content" style=" padding: 0;">
-                        <div class="card mb-3" id="div_card" style="">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="https://via.placeholder.com/200" class="img-fluid rounded-start"
-                                        alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <h5 class="card-title text-start ">Admin</h5>
-                                            <a href="#" style="text-decoration: none; color: #1b8859;">Edit</a>
-                                        </div>
-                                        <ul class="text-start" style="list-style-type: none; padding: 0;">
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 384 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z" />
-                                                    </svg>
-                                                    user
-                                                </p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 640 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z" />
-                                                    </svg>
-                                                    location
-                                                </p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 384 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M88 104C88 95.16 95.16 88 104 88H152C160.8 88 168 95.16 168 104V152C168 160.8 160.8 168 152 168H104C95.16 168 88 160.8 88 152V104zM280 88C288.8 88 296 95.16 296 104V152C296 160.8 288.8 168 280 168H232C223.2 168 216 160.8 216 152V104C216 95.16 223.2 88 232 88H280zM88 232C88 223.2 95.16 216 104 216H152C160.8 216 168 223.2 168 232V280C168 288.8 160.8 296 152 296H104C95.16 296 88 288.8 88 280V232zM280 216C288.8 216 296 223.2 296 232V280C296 288.8 288.8 296 280 296H232C223.2 296 216 288.8 216 280V232C216 223.2 223.2 216 232 216H280zM0 64C0 28.65 28.65 0 64 0H320C355.3 0 384 28.65 384 64V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64zM48 64V448C48 456.8 55.16 464 64 464H144V400C144 373.5 165.5 352 192 352C218.5 352 240 373.5 240 400V464H320C328.8 464 336 456.8 336 448V64C336 55.16 328.8 48 320 48H64C55.16 48 48 55.16 48 64z" />
-                                                    </svg>
-                                                    This is a wider card
-                                                </p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col" id="div_content" style=" padding: 0;">
-                        <div class="card mb-3" id="div_card" style="">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="https://via.placeholder.com/200" class="img-fluid rounded-start"
-                                        alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <h5 class="card-title text-start ">Admin</h5>
-                                            <a href="#" style="text-decoration: none; color: #1b8859;">Edit</a>
-                                        </div>
-                                        <ul class="text-start" style="list-style-type: none; padding: 0;">
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 384 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 256c-35.3 0-64-28.7-64-64s28.7-64 64-64s64 28.7 64 64s-28.7 64-64 64z" />
-                                                    </svg>
-                                                    user
-                                                </p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 640 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z" />
-                                                    </svg>
-                                                    location
-                                                </p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                                        viewBox="0 0 384 512">
-                                                        <!--! Font Awesome Pro 6.2.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2022 Fonticons, Inc. -->
-                                                        <path
-                                                            d="M88 104C88 95.16 95.16 88 104 88H152C160.8 88 168 95.16 168 104V152C168 160.8 160.8 168 152 168H104C95.16 168 88 160.8 88 152V104zM280 88C288.8 88 296 95.16 296 104V152C296 160.8 288.8 168 280 168H232C223.2 168 216 160.8 216 152V104C216 95.16 223.2 88 232 88H280zM88 232C88 223.2 95.16 216 104 216H152C160.8 216 168 223.2 168 232V280C168 288.8 160.8 296 152 296H104C95.16 296 88 288.8 88 280V232zM280 216C288.8 216 296 223.2 296 232V280C296 288.8 288.8 296 280 296H232C223.2 296 216 288.8 216 280V232C216 223.2 223.2 216 232 216H280zM0 64C0 28.65 28.65 0 64 0H320C355.3 0 384 28.65 384 64V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64zM48 64V448C48 456.8 55.16 464 64 464H144V400C144 373.5 165.5 352 192 352C218.5 352 240 373.5 240 400V464H320C328.8 464 336 456.8 336 448V64C336 55.16 328.8 48 320 48H64C55.16 48 48 55.16 48 64z" />
-                                                    </svg>
-                                                    This is a wider card
-                                                </p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {{-- <div class="col" style="padding: 0;">
-                        <div class="card mb-3" id="div_card" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="https://via.placeholder.com/200" class="img-fluid rounded-start"
-                                        alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <h5 class="card-title text-start ">Admin</h5>
-                                            <a href="#" style="text-decoration: none; color: #1b8859;">Edit</a>
-                                        </div>
-                                        <ul class="text-start" style="list-style-type: none; padding: 0;">
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start"><i class="fa-solid fa-user text-start"
-                                                        style="color: #1b8859;"></i> user</p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start"><i
-                                                        class="fa-solid fa-location-dot text-start"
-                                                        style="color: #1b8859;"></i> location</p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start"><i class="fa-solid fa-book text-start"
-                                                        style="color: #1b8859;"></i> This is a wider card </p>
-                                            </li>
-                                        </ul>
-                                        <!-- <p class="card-text text-start">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                                <p class="card-text text-start"><i class="fa-solid fa-location-dot  text-start"></i> location</p>
-                                <p class="card-text text-start"><small class="text-muted">Last updated 3 mins ago</small></p> -->
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col" style=" padding: 0;">
-                        <div class="card mb-3" id="div_card" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="https://via.placeholder.com/200" class="img-fluid rounded-start"
-                                        alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <h5 class="card-title text-start ">Admin</h5>
-                                            <a href="#" style="text-decoration: none; color: #1b8859;">Edit</a>
-                                        </div>
-                                        <ul class="text-start" style="list-style-type: none; padding: 0;">
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start"><i class="fa-solid fa-user text-start"
-                                                        style="color: #1b8859;"></i> user</p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start"><i
-                                                        class="fa-solid fa-location-dot text-start"
-                                                        style="color: #1b8859;"></i> location</p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start"><i class="fa-solid fa-book text-start"
-                                                        style="color: #1b8859;"></i> This is a wider card </p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col" style=" padding: 0;">
-                        <div class="card mb-3" id="div_card" style="max-width: 540px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="https://via.placeholder.com/200" class="img-fluid rounded-start"
-                                        alt="...">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <div style="display: flex; justify-content: space-between;">
-                                            <h5 class="card-title text-start ">Admin</h5>
-                                            <a href="#" style="text-decoration: none; color: #1b8859;">Edit</a>
-                                        </div>
-                                        <ul class="text-start" style="list-style-type: none; padding: 0;">
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start"><i class="fa-solid fa-user text-start"
-                                                        style="color: #1b8859;"></i> user</p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start"><i
-                                                        class="fa-solid fa-location-dot text-start"
-                                                        style="color: #1b8859;"></i> location</p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
-                                                <p class="card-text text-start"><i class="fa-solid fa-book text-start"
-                                                        style="color: #1b8859;"></i> This is a wider card </p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> --}}
+                    @endforeach
                 </div>
             </div>
-
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm">
+                        <div style="float: right">
+                            {{ $compounds->links('pagination::bootstrap-4') }}
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
@@ -524,7 +221,7 @@
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
-                        $('tbody').html(data.table_data);
+                        $('#div_content_data').html(data.table_data);
                     }
                 }); //end ajax
             }

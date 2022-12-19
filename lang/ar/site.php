@@ -122,6 +122,7 @@ return [
     "one_apartment" => " شقة",
     "villa" => "فيلا",
     "a_land" => "ارض",
+    "count" => "العدد",
 
     ////
     'add' => 'اضف',
@@ -190,7 +191,7 @@ return [
     'compound_update' => 'تم التعديل على المجمع',
     'compound_create' => ' تم اضافة مجمع جديد',
     'search_Compounds' => 'البحث فى المجمعات',
-    'add_Compound' => 'اضافة مجمع',
+    'add_compound' => 'اضافة مجمع',
 
 
     "buildings" => "العمارات",

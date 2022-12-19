@@ -22,8 +22,8 @@
             <div class="menu menu-column menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fw-bold"
                 id="#kt_aside_menu" data-kt-menu="true">
                 <div class="menu-item py-2">
-                    <a class="menu-link active menu-center" href="" data-bs-trigger="hover" data-bs-dismiss="click"
-                        data-bs-placement="right">
+                    <a class="menu-link active menu-center" href="{{route('page.home')}}" data-bs-trigger="hover"
+                        data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon me-0">
                             <i class="bi bi-house fs-2"></i>
                         </span>
@@ -31,7 +31,17 @@
                     </a>
                 </div>
 
-                <div data-kt-menu-trigger="click" data-kt-menu-placement="right-start" class="menu-item py-2">
+                <div class="menu-item py-2">
+                    <a class="menu-link menu-center" href="{{route('compound.index')}}" data-bs-trigger="hover"
+                        data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-shield-check fs-2"></i>
+                        </span>
+                        <span class="menu-title">{{__("site.estates")}}</span>
+                    </a>
+                </div>
+
+                {{-- <div data-kt-menu-trigger="click" data-kt-menu-placement="right-start" class="menu-item py-2">
                     <span class="menu-link menu-center" data-bs-trigger="hover" data-bs-dismiss="click"
                         data-bs-placement="right">
                         <span class="menu-icon me-0">
@@ -66,7 +76,7 @@
                         </div>
 
                     </div>
-                </div>
+                </div> --}}
             </div>
             <!--end::Menu-->
         </div>

@@ -3,7 +3,7 @@
 @section('css')
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <link rel="stylesheet" href="{{ asset('assets/css/app.css') }}">
-<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
+<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
 @if (app()->getLocale() == 'ar')
 <style>
     .row {
@@ -31,15 +31,18 @@
 
                     <!--begin:: kind apartment  -->
                     <div class="fv-row mb-10">
-                        {{-- <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.type_of_air_conditioning')
-                            }}</label> --}}
                         <div id="div_radio1">
-                            <input type="radio" name="Kind" class="input_radio" value="apartment" id="option1" checked>
-                            <label for="option1" class="radio_label">{{__('site.one_apartment')}}</label>
-                            <input type="radio" name="Kind" class="input_radio" value="villa" id="option2">
-                            <label for="option2" class="radio_label">{{__('site.villa')}}</label>
-                            <input type="radio" name="Kind" class="input_radio" value="a_land" id="option3">
-                            <label for="option3" class="radio_label">{{__('site.a_land')}}</label>
+                            <input type="radio" name="kind" onclick="changeOption('apartment')" class="input_radio"
+                                value="apartment" id="option1" checked>
+                            <label for="option1" class="radio_label">{{ __('site.one_apartment') }}</label>
+                            {{-- // --}}
+                            <input type="radio" name="kind" onclick="changeOption('villa')" class="input_radio"
+                                value="villa" id="option2">
+                            <label for="option2" class="radio_label">{{ __('site.villa') }}</label>
+                            {{-- // --}}
+                            <input type="radio" name="kind" onclick="changeOption('a_land')" class="input_radio"
+                                value="a_land" id="option3">
+                            <label for="option3" class="radio_label">{{ __('site.a_land') }}</label>
                         </div>
 
                     </div>
@@ -59,13 +62,13 @@
                     <!--end::apartment name-->
 
                     <!--begin::apartment date-->
-                    <div class="fv-row mb-10">
+                    <div id="date" class="fv-row mb-10">
 
                         <label for="date" class="fw-bold fs-6 mb-2">{{ __('site.date') }}</label>
-                        <input type="date" name="date" id="date" class="form-control form-control-solid mb-3 mb-lg-0"
+                        <input type="date" name="date" id="dateId" class="form-control form-control-solid mb-3 mb-lg-0"
                             placeholder="" value="" required />
-                        @error('city')
-                        <p class="text-danger">{{ $errors->first('city') }}</p>
+                        @error('date')
+                        <p class="text-danger">{{ $errors->first('date') }}</p>
                         @enderror
 
                     </div>
@@ -109,7 +112,7 @@
                     <!--end::apartment space -->
 
                     <!--begin::apartment air conditioning -->
-                    <div class="fv-row mb-10">
+                    <div id="air_conditioning" class="fv-row mb-10">
                         <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.type_of_air_conditioning') }}</label>
                         {{-- <div class="btn-group" id="div_radio">
                             <input type="radio" class="btn-check" name="Conditioning" value="window" id="window"
@@ -130,19 +133,18 @@
 
                         </div> --}}
                         <div id="div_radio1">
-                            <input type="radio" name="Conditioning" class="input_radio" value="window" id="window"
-                                checked>
-                            <label for="window" class="radio_label">{{__('site.window')}}</label>
+                            <input type="radio" name="conditioning" class="input_radio" value="window" id="window">
+                            <label for="window" class="radio_label">{{ __('site.window') }}</label>
 
-                            <input type="radio" name="Conditioning" class="input_radio" value="split" id="split">
-                            <label for="split" class="radio_label">{{__('site.split')}}</label>
+                            <input type="radio" name="conditioning" class="input_radio" value="split" id="split">
+                            <label for="split" class="radio_label">{{ __('site.split') }}</label>
 
-                            <input type="radio" name="Conditioning" class="input_radio" value="central" id="central">
-                            <label for="central" class="radio_label">{{__('site.central')}}</label>
+                            <input type="radio" name="conditioning" class="input_radio" value="central" id="central">
+                            <label for="central" class="radio_label">{{ __('site.central') }}</label>
 
-                            <input type="radio" name="Conditioning" class="input_radio" value="not available"
+                            <input type="radio" name="conditioning" class="input_radio" value="not available"
                                 id="not_available">
-                            <label for="not_available" class="radio_label">{{__('site.not_available')}}</label>
+                            <label for="not_available" class="radio_label">{{ __('site.not_available') }}</label>
                         </div>
 
                     </div>
@@ -150,38 +152,38 @@
 
                     <!--begin::apartment floor and bedroon number-->
                     <div class="row">
-                        <div class="col-lg-6 fv-row">
-                            <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.floor') }}</label>
+                        <div id="floor" class="col-lg-6 fv-row">
+                            <label for="floorid" class="fw-bold fs-6 mb-2">{{ __('site.floor') }}</label>
                             <div class="input-group mb-3">
 
                                 <div class="input-group-prepend">
                                     <span id="a_tag_right" class="input-group-text">
-                                        <a onclick="decreaseValue(this,'floor')">-</a>
+                                        <a onclick="decreaseValue(this,'floorid')">-</a>
                                     </span>
                                 </div>
 
-                                <input type="text" class="form-control" name="floor" id="floor"
+                                <input type="text" class="form-control" name="floor" id="floorid"
                                     aria-label="Amount (to the nearest dollar)">
                                 <div class="input-group-append">
                                     <span id="a_tag_left" class="input-group-text">
-                                        <a onclick="increaseValue(this, 5,'floor')">+
+                                        <a onclick="increaseValue(this, 5,'floorid')">+
                                         </a>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 fv-row">
+                        <div id="bedroom" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.bedroom') }}</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span id="a_tag_right" class="input-group-text"><a
-                                            onclick="decreaseValue(this,'bedroom')">-</a></span>
+                                            onclick="decreaseValue(this,'bedroomId')">-</a></span>
                                 </div>
-                                <input type="text" class="form-control" name="bedroom" id="bedroom"
+                                <input type="text" class="form-control" name="bedroom" id="bedroomId"
                                     aria-label="Amount (to the nearest dollar)">
                                 <div class="input-group-append">
                                     <span id="a_tag_left" class="input-group-text"><a
-                                            onclick="increaseValue(this, 5,'bedroom')">+
+                                            onclick="increaseValue(this, 5,'bedroomId')">+
                                         </a></span>
                                 </div>
                             </div>
@@ -191,27 +193,27 @@
 
                     <!--begin::apartment councils and bathroom number-->
                     <div class="row">
-                        <div class="col-lg-6 fv-row">
+                        <div id="bathroom" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.bathroom') }}</label>
                             <div class="input-group mb-3">
 
                                 <div class="input-group-prepend">
                                     <span id="a_tag_right" class="input-group-text">
-                                        <a onclick="decreaseValue(this,'bathroom')">-</a>
+                                        <a onclick="decreaseValue(this,'bathroomId')">-</a>
                                     </span>
                                 </div>
 
-                                <input type="text" class="form-control" name="bathroom" id="bathroom"
+                                <input type="text" class="form-control" name="bathroom" id="bathroomId"
                                     aria-label="Amount (to the nearest dollar)">
                                 <div class="input-group-append">
                                     <span id="a_tag_left" class="input-group-text">
-                                        <a onclick="increaseValue(this, 5,'bathroom')">+
+                                        <a onclick="increaseValue(this, 5,'bathroomId')">+
                                         </a>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 fv-row">
+                        <div id="councils_1" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.councils') }}</label>
                             <div class="input-group mb-3">
                                 <div class="input-group-prepend">
@@ -233,13 +235,13 @@
 
                     <!--begin::apartment lounges and Furnishing condition -->
                     <div class="row">
-                        <div class="col-lg-6 fv-row">
+                        <div id="lounge" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.lounges') }}</label>
                             <div class="input-group mb-3">
 
                                 <div class="input-group-prepend">
                                     <span id="a_tag_right" class="input-group-text">
-                                        <a onclick="decreaseValue(this)">-</a>
+                                        <a onclick="decreaseValue(this,'lounges')">-</a>
                                     </span>
                                 </div>
 
@@ -247,13 +249,13 @@
                                     aria-label="Amount (to the nearest dollar)">
                                 <div class="input-group-append">
                                     <span id="a_tag_left" class="input-group-text">
-                                        <a onclick="increaseValue(this, 5)">+
+                                        <a onclick="increaseValue(this, 5,'lounges')">+
                                         </a>
                                     </span>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-lg-6 fv-row">
+                        <div id="condition" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.furnishing_condition') }}</label>
                             {{-- <div class="input-group">
                                 <div class="btn-group" id="div_radio">
@@ -271,13 +273,17 @@
                                 {{--
                             </div> --}}
                             <div id="div_radio_2">
-                                <input type="radio" name="options" class="input_radio_2" value="yes" id="yes" checked>
+                                <input type="radio" name="furnishing_condition" class="input_radio_2" value="yes"
+                                    id="yes" checked>
                                 <label for="yes" class="radio_label_2"
-                                    style="border-top-left-radius: 8px;border-bottom-left-radius: 8px;">{{__('site.yes')}}</label>
+                                    style="border-top-left-radius: 8px;border-bottom-left-radius: 8px;">{{
+                                    __('site.yes') }}</label>
 
-                                <input type="radio" name="options" class="input_radio_2" value="no" id="no">
+                                <input type="radio" name="furnishing_condition" class="input_radio_2" value="no"
+                                    id="no">
                                 <label for="no" class="radio_label_2"
-                                    style="border-top-right-radius: 8px;border-bottom-right-radius: 8px;">{{__('site.no')}}</label>
+                                    style="border-top-right-radius: 8px;border-bottom-right-radius: 8px;">{{
+                                    __('site.no') }}</label>
                             </div>
                         </div>
                     </div><br>
@@ -285,7 +291,7 @@
 
                     <!--begin::apartment parking and kitchen type -->
                     <div class="row">
-                        <div class="col-lg-6 fv-row">
+                        <div id="parking" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.parking') }}</label>
                             {{-- <div class="input-group">
                                 <div class="btn-group" id="div_radio">
@@ -303,14 +309,16 @@
                             <div id="div_radio_2">
                                 <input type="radio" name="parking" class="input_radio_2" value="yes" id="yes_2" checked>
                                 <label for="yes_2" class="radio_label_2"
-                                    style="border-top-left-radius: 8px;border-bottom-left-radius: 8px;">{{__('site.yes')}}</label>
+                                    style="border-top-left-radius: 8px;border-bottom-left-radius: 8px;">{{
+                                    __('site.yes') }}</label>
 
                                 <input type="radio" name="parking" class="input_radio_2" value="no" id="no_2">
                                 <label for="no_2" class="radio_label_2"
-                                    style="border-top-right-radius: 8px;border-bottom-right-radius: 8px;">{{__('site.no')}}</label>
+                                    style="border-top-right-radius: 8px;border-bottom-right-radius: 8px;">{{
+                                    __('site.no') }}</label>
                             </div>
                         </div>
-                        <div class="col-lg-6 fv-row">
+                        <div id="kitchen" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.type_of_kitchen') }}</label>
                             {{-- <div class="input-group">
                                 <div class="btn-group" id="div_radio">
@@ -328,36 +336,38 @@
                             <div id="div_radio_2">
                                 <input type="radio" name="kitchen" class="input_radio_2" value="open" id="open" checked>
                                 <label for="open" class="radio_label_2"
-                                    style="border-top-left-radius: 8px;border-bottom-left-radius: 8px;">{{__('site.open')}}</label>
+                                    style="border-top-left-radius: 8px;border-bottom-left-radius: 8px;">{{
+                                    __('site.open') }}</label>
 
                                 <input type="radio" name="kitchen" class="input_radio_2" value="closed" id="closed">
                                 <label for="closed" class="radio_label_2"
-                                    style="border-top-right-radius: 8px;border-bottom-right-radius: 8px;">{{__('site.closed')}}</label>
+                                    style="border-top-right-radius: 8px;border-bottom-right-radius: 8px;">{{
+                                    __('site.closed') }}</label>
                             </div>
                         </div>
                     </div><br>
                     <!--end::apartment lounges and Furnishing condition -->
 
                     <!--begin::apartment electricity_meter_number-->
-                    <div class="fv-row mb-10" id="">
+                    <div class="fv-row mb-10" id="electricity">
 
                         <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.electricity_meter_number') }}</label>
-                        <input type="text" name="space" id="space" class="form-control form-control-solid mb-3 mb-lg-0"
-                            placeholder="" value="" required />
-                        @error('space')
-                        <p class="text-danger">{{ $errors->first('space') }}</p>
+                        <input type="text" name="electricity_meter_number" id="electricity_meter_number"
+                            class="form-control form-control-solid mb-3 mb-lg-0" placeholder="" value="" required />
+                        @error('electricity_meter_number')
+                        <p class="text-danger">{{ $errors->first('electricity_meter_number') }}</p>
                         @enderror
                     </div>
                     <!--end::apartment electricity_meter_number -->
 
                     <!--begin::apartment water_meter_number-->
-                    <div class="fv-row mb-10" id="">
+                    <div class="fv-row mb-10" id="water_meter">
 
                         <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.water_meter_number') }}</label>
-                        <input type="text" name="space" id="space" class="form-control form-control-solid mb-3 mb-lg-0"
-                            placeholder="" value="" required />
-                        @error('space')
-                        <p class="text-danger">{{ $errors->first('space') }}</p>
+                        <input type="text" name="water_meter_number" id="water_meter_number"
+                            class="form-control form-control-solid mb-3 mb-lg-0" placeholder="" value="" required />
+                        @error('water_meter_number')
+                        <p class="text-danger">{{ $errors->first('water_meter_number') }}</p>
                         @enderror
                     </div>
                     <!--end::apartment water_meter_number -->
@@ -380,7 +390,7 @@
                     <div class="row">
 
                         <div class="col-9">
-                            <button type="button" onclick="addBuilding()" id="button" class="btn btn-primary mr-2">{{
+                            <button type="button" onclick="addApartment()" id="button" class="btn btn-primary mr-2">{{
                                 __('site.submit') }}</button>
                             <button type="reset" class="btn btn-secondary">{{ __('site.cancel') }}</button>
                         </div>
@@ -401,20 +411,72 @@
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/js/crud.js') }}"></script>
 <script>
-    function increaseValue(button, limit,inputid) {
-        var value = parseInt(document.getElementById(inputid).value, 10);
-        value = isNaN(value) ? 0 : value;
-        value++;
-        document.getElementById(inputid).value = value;
-    }
+    function increaseValue(button, limit, inputid) {
+            var value = parseInt(document.getElementById(inputid).value, 10);
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById(inputid).value = value;
+        } //end increaseValue
 
-    function decreaseValue(button,inputid) {
-        var value = parseInt(document.getElementById(inputid).value, 10);
-        value = isNaN(value) ? 0 : value;
-        value < 1 ? value = 1 : '';
-        value--;
-        document.getElementById(inputid).value = value;
-    }
+        function decreaseValue(button, inputid) {
+            var value = parseInt(document.getElementById(inputid).value, 10);
+            value = isNaN(value) ? 0 : value;
+            value < 1 ? value = 1 : '';
+            value--;
+            document.getElementById(inputid).value = value;
+        } //end decreaseValue
+
+        function changeOption(inputValue) {
+            // console.log(inputValue);
+            if (inputValue == 'villa') {
+                document.getElementById("floor").style.display = 'none';
+                document.getElementById("bedroom").style.display = 'block';
+                document.getElementById("councils_1").style.display = 'block';
+                document.getElementById("bathroom").style.display = 'block';
+                document.getElementById("lounge").style.display = 'block';
+                document.getElementById("condition").style.display = 'block';
+
+                document.getElementById("parking").style.display = 'block';
+                document.getElementById("kitchen").style.display = 'block';
+
+                document.getElementById("electricity").style.display = 'block';
+                document.getElementById("water_meter").style.display = 'block';
+                document.getElementById("air_conditioning").style.display = 'block';
+                document.getElementById("date").style.display = 'block';
+
+
+            } else if(inputValue == 'apartment'){
+                document.getElementById("floor").style.display = 'block';
+                document.getElementById("bedroom").style.display = 'block';
+                document.getElementById("councils_1").style.display = 'block';
+                document.getElementById("bathroom").style.display = 'block';
+                document.getElementById("lounge").style.display = 'block';
+                document.getElementById("condition").style.display = 'block';
+
+                document.getElementById("parking").style.display = 'block';
+                document.getElementById("kitchen").style.display = 'block';
+
+                document.getElementById("electricity").style.display = 'block';
+                document.getElementById("water_meter").style.display = 'block';
+                document.getElementById("air_conditioning").style.display = 'block';
+                document.getElementById("date").style.display = 'block';
+
+            }else {
+                document.getElementById("floor").style.display = 'none';
+                document.getElementById("bedroom").style.display = 'none';
+                document.getElementById("councils_1").style.display = 'none';
+                document.getElementById("bathroom").style.display = 'none';
+                document.getElementById("lounge").style.display = 'none';
+                document.getElementById("condition").style.display = 'none';
+
+                document.getElementById("parking").style.display = 'none';
+                document.getElementById("kitchen").style.display = 'none';
+
+                document.getElementById("electricity").style.display = 'none';
+                document.getElementById("water_meter").style.display = 'none';
+                document.getElementById("air_conditioning").style.display = 'none';
+                document.getElementById("date").style.display = 'none';
+            }
+        } //end changeOption
 </script>
-{{-- // --}}
 @endsection

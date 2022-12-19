@@ -15,22 +15,24 @@ return new class extends Migration
     {
         Schema::create('apartments', function (Blueprint $table) {
             $table->id();
+            $table->string('kind');
             $table->string('apartment_name');
-            $table->date('apartment_date_added');
+            $table->date('apartment_date_added')->nullable();
             $table->string('city');
             $table->string('address');
-            $table->string('ac_type');
-            $table->string('floor_number');
-            $table->string('number_of_bedrooms');
-            $table->string('number_of_bathrooms');
-            $table->string('number_of_councils');
-            $table->string('number_of_lounges');
-            $table->string('furnishing_condition');
-            $table->string('type_of_kitchen');
-            $table->string('parking');
-            $table->string('electricity_meter_number');
-            $table->string('water_meter_number');
-            $table->foreignId('building_id')->constrained();
+            $table->string('space');
+            $table->string('ac_type')->nullable();
+            $table->string('floor_number')->nullable();
+            $table->string('number_of_bedrooms')->nullable();
+            $table->string('number_of_bathrooms')->nullable();
+            $table->string('number_of_councils')->nullable();
+            $table->string('number_of_lounges')->nullable();
+            $table->string('furnishing_condition')->nullable();
+            $table->string('type_of_kitchen')->nullable();
+            $table->string('parking')->nullable();
+            $table->string('electricity_meter_number')->nullable();
+            $table->string('water_meter_number')->nullable();
+            $table->foreignId('building_id')->nullable();
             $table->foreignId('compound_id')->nullable();
             $table->foreignId('property_owner_id')->constrained();
             $table->timestamps();
