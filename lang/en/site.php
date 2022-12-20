@@ -130,6 +130,9 @@ return [
     "villa" => "Villa",
     "a_land" => "A land",
     "count" => "count",
+    'excel_file' => 'Excel File',
+    'add_excel_file' => 'Add Excel File',
+
 
 
 

@@ -34,7 +34,7 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:admin,employee,owner']
     ],
     function () {
-        Route::view('', 'dashboard.home_page')->name('page.home');
+        Route::get('', [Controller::class, 'homeController'])->name('page.home');
 
         /* ************************** owner ************************** */
         Route::resource('owner', PropertyOwnerController::class);
@@ -43,18 +43,24 @@ Route::group(
         /* ************************** compound ************************** */
         Route::resource('compound', CompoundController::class);
         Route::get('search', [CompoundController::class, 'search'])->name('search');
+        Route::get('import/compound', [CompoundController::class, 'viewImport'])->name('compound.import');
+        Route::post('import/compound', [CompoundController::class, 'importShippment'])->name('compound.import.store');
         /* ************************** end compound ************************** */
 
         /* ************************** building ************************** */
         Route::resource('building', BuildingController::class);
         Route::delete('building/image/{id}', [BuildingController::class, 'deleteImage'])->name('building.image.delete');
         Route::get('search/building', [BuildingController::class, 'search'])->name('building.search');
+        Route::get('import/building', [BuildingController::class, 'viewImport'])->name('building.import');
+        Route::post('import/building', [BuildingController::class, 'importShippment'])->name('building.import.store');
         /* ************************** end building ************************** */
 
         /* ************************** apartment ************************** */
         Route::resource('apartment', ApartmentController::class);
-        Route::delete('apartment/image/{id}', [BuildingController::class, 'deleteImage'])->name('apartment.image.delete');
-        Route::get('search/apartment', [BuildingController::class, 'search'])->name('apartment.search');
+        Route::delete('apartment/image/{id}', [ApartmentController::class, 'deleteImage'])->name('apartment.image.delete');
+        Route::get('search/apartment', [ApartmentController::class, 'search'])->name('apartment.search');
+        Route::get('import/apartment', [ApartmentController::class, 'viewImport'])->name('apartment.import');
+        Route::post('import/apartment', [ApartmentController::class, 'importApartment'])->name('apartment.import.store');
         /* ************************** end apartment ************************** */
 
         //delete images ..

@@ -36,7 +36,7 @@
             </div>
 
             <div class="card-toolbar">
-                <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
+                <a href="{{route('apartment.import')}}" class="btn btn-light-primary me-3"
                     data-bs-target="#kt_customers_export_modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
                     <span class="svg-icon svg-icon-2">
@@ -52,7 +52,7 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->Import
-                </button>
+                </a>
                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                     <a href="{{ route('apartment.create') }}" class="btn btn-primary">{{__('site.add_apartment')}}</a>
 
@@ -189,19 +189,17 @@
 <script>
     $("body").on("keyup", "#search", function() {
             let text = $("#search").val();
-            if (text != null) {
                 $.ajax({
                     data: {
                         search: text
                     },
-                    url: "{{ route('search') }}",
+                    url: "{{ route('apartment.search') }}",
                     method: 'GET',
                     dataType: 'json',
                     success: function(data) {
                         $('#div_content_data').html(data.table_data);
                     }
                 }); //end ajax
-            }
         }); //end function
 
         function performDestroy(id, reference) {

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\CompoundsImport;
 use App\Models\Compound;
 use App\Models\Image as Images;
 use App\Traits\image;
@@ -140,25 +141,6 @@ class CompoundController extends Controller
      */
     public function destroy(Compound $compound)
     {
-        // if ($compound->images) {
-        //     foreach ($compound->images as $image) {
-        //         File::delete($image->image_url);
-        //         $image->delete();
-        //     }
-        // }
-
-        // $isDeleted = $compound->delete();
-        // if ($isDeleted) {
-        //     return response()->json(
-        //         [
-        //             'status' => true,
-        //             'message' => $isDeleted ? 'deleted success' : 'Deleted failed!'
-        //         ],
-        //         $isDeleted ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
-        //     );
-        // } else {
-        //     return redirect()->back();
-        // }
     }
 
     public function search(Request $request)
@@ -235,5 +217,22 @@ class CompoundController extends Controller
 
             echo json_encode($data);
         }
+    }
+
+    function viewImport()
+    {
+        return view('dashboard.owner.compound.import');
+    }
+    function importShippment(Request $request)
+    {
+        $request->validate([
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+
+        $file = $request->file('file')->path();
+        $import = new CompoundsImport;
+        $import->import($file);
+
+        return redirect()->back();
     }
 }

@@ -239,6 +239,8 @@ return [
     'submit' => 'إرسال',
     'edit' => 'تعديل',
     'cancel' => 'إلغاء',
+    'excel_file' => 'ملف الاكسل',
+    'add_excel_file' => 'اضف ملف الاكسل',
 
 
     'ar' => [

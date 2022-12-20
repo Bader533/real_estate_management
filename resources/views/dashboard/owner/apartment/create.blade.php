@@ -154,7 +154,7 @@
                     <div class="row">
                         <div id="floor" class="col-lg-6 fv-row">
                             <label for="floorid" class="fw-bold fs-6 mb-2">{{ __('site.floor') }}</label>
-                            <div class="input-group mb-3">
+                            <div style="direction: ltr" class="input-group mb-3">
 
                                 <div class="input-group-prepend">
                                     <span id="a_tag_right" class="input-group-text">
@@ -174,7 +174,7 @@
                         </div>
                         <div id="bedroom" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.bedroom') }}</label>
-                            <div class="input-group mb-3">
+                            <div style="direction: ltr" class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span id="a_tag_right" class="input-group-text"><a
                                             onclick="decreaseValue(this,'bedroomId')">-</a></span>
@@ -195,7 +195,7 @@
                     <div class="row">
                         <div id="bathroom" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.bathroom') }}</label>
-                            <div class="input-group mb-3">
+                            <div style="direction: ltr" class="input-group mb-3">
 
                                 <div class="input-group-prepend">
                                     <span id="a_tag_right" class="input-group-text">
@@ -215,7 +215,7 @@
                         </div>
                         <div id="councils_1" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.councils') }}</label>
-                            <div class="input-group mb-3">
+                            <div style="direction: ltr" class="input-group mb-3">
                                 <div class="input-group-prepend">
                                     <span id="a_tag_right" class="input-group-text"><a
                                             onclick="decreaseValue(this,'councils')">-</a></span>
@@ -237,7 +237,7 @@
                     <div class="row">
                         <div id="lounge" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.lounges') }}</label>
-                            <div class="input-group mb-3">
+                            <div style="direction: ltr" class="input-group mb-3">
 
                                 <div class="input-group-prepend">
                                     <span id="a_tag_right" class="input-group-text">
@@ -272,7 +272,7 @@
 
                                 {{--
                             </div> --}}
-                            <div id="div_radio_2">
+                            <div style="direction: ltr" id="div_radio_2">
                                 <input type="radio" name="furnishing_condition" class="input_radio_2" value="yes"
                                     id="yes" checked>
                                 <label for="yes" class="radio_label_2"
@@ -306,7 +306,7 @@
 
                                 </div>
                             </div> --}}
-                            <div id="div_radio_2">
+                            <div style="direction: ltr" id="div_radio_2">
                                 <input type="radio" name="parking" class="input_radio_2" value="yes" id="yes_2" checked>
                                 <label for="yes_2" class="radio_label_2"
                                     style="border-top-left-radius: 8px;border-bottom-left-radius: 8px;">{{
@@ -333,7 +333,7 @@
 
                                 </div>
                             </div> --}}
-                            <div id="div_radio_2">
+                            <div style="direction: ltr" id="div_radio_2">
                                 <input type="radio" name="kitchen" class="input_radio_2" value="open" id="open" checked>
                                 <label for="open" class="radio_label_2"
                                     style="border-top-left-radius: 8px;border-bottom-left-radius: 8px;">{{
