@@ -11,6 +11,8 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\Importable;
 use Maatwebsite\Excel\Concerns\SkipsErrors;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Events\AfterImport;
+use Maatwebsite\Excel\Validators\Failure;
 
 
 
@@ -30,16 +32,26 @@ class CompoundsImport implements ToModel, WithHeadingRow, SkipsOnError, WithVali
         $compound->property_owner_id  = auth('owner')->user()->id;
         $isSaved = $compound->save();
     }
+
     public function rules(): array
     {
         return [
-            '*.name' => 'required',
-            '*.city' => 'required',
-            '*.address' => 'required',
+            '*.name' => 'required |string | max:18',
+            '*.city' => 'required |string | max:18',
+            '*.address' => 'required |string | max:30',
         ];
     }
+
     public function chunkSize(): int
     {
         return 1000;
+    }
+
+    public static function afterImport(AfterImport $event)
+    {
+    }
+
+    public function onFailure(Failure ...$failure)
+    {
     }
 }

@@ -9,6 +9,14 @@ class Compound extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name',
+        'city',
+        'address',
+        'property_owner_id',
+    ];
+
+
     public function propertyOwner()
     {
         return $this->belongsTo(PropertyOwner::class);
@@ -23,4 +31,14 @@ class Compound extends Model
     {
         return $this->hasMany(Building::class);
     }
+
+    public function apartments()
+    {
+        return $this->hasMany(Apartment::class);
+    }
+
+    // public function tenants()
+    // {
+    //     return $this->hasMany(Tenant::class);
+    // }
 }

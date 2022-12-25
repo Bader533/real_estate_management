@@ -43,7 +43,6 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->kind);
         $validator = Validator($request->all(), [
             'kind' => 'required | string ',
             'name' => 'required | string |max:50',
@@ -52,16 +51,16 @@ class ApartmentController extends Controller
             'space' => 'required | numeric  ',
             'date' => 'required_if:kind,apartment,villa',
             'conditioning' => 'required_if:kind,apartment,villa | string | max:50 ',
-            'floor' => 'required_if:kind,apartment|numeric ',
-            'bedroom' => 'required_if:kind,apartment,villa | numeric ',
-            'bathroom' => 'required_if:kind,apartment,villa | numeric ',
-            'councils' => 'required_if:kind,apartment,villa | numeric ',
+            'floor' => 'required_if:kind,apartment',
+            'bedroom' => 'required_if:kind,apartment,villa ',
+            'bathroom' => 'required_if:kind,apartment,villa ',
+            'councils' => 'required_if:kind,apartment,villa ',
             'lounges' => 'required_if:kind,apartment,villa  ',
             'furnishing_condition' => 'required_if:kind,apartment,villa | in:yes,no ',
             'parking' => 'required_if:kind,apartment,villa | in:yes,no ',
             'kitchen' => 'required_if:kind,apartment,villa | in:open,closed ',
-            'electricity_meter_number' => 'required_if:kind,apartment,villa | numeric | digits_between:1,20 ',
-            'water_meter_number' => 'required_if:kind,apartment,villa | numeric | digits_between:1,20  ',
+            'electricity_meter_number' => 'required_if:kind,apartment,villa | max:20 ',
+            'water_meter_number' => 'required_if:kind,apartment,villa | max:20  ',
         ]);
         if (!$validator->fails()) {
             $apartment = new Apartment();
@@ -119,6 +118,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
+        return view('dashboard.owner.apartment.show', ['apartment' => $apartment]);
     }
 
     /**
@@ -318,16 +318,24 @@ class ApartmentController extends Controller
     {
         return view('dashboard.owner.apartment.import');
     }
+
     function importApartment(Request $request)
     {
-        $request->validate([
+
+        $validator = Validator($request->all(), [
             'file' => 'required|mimes:xlsx,xls',
         ]);
-
-        $file = $request->file('file')->path();
-        $import = new ApartmentsImport;
-        $import->import($file);
-
-        return redirect()->back();
+        if (!$validator->fails()) {
+            $file = $request->file('file')->path();
+            $import = new ApartmentsImport;
+            $import->import($file);
+            return response()->json(
+                [
+                    'message' => 'File Added successfully'
+                ]
+            );
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

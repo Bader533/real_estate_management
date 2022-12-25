@@ -24,7 +24,7 @@
             <div class="card-header">
                 <h3 class="card-title">{{__('site.add_apartment')}} </h3>
                 <div class="card-toolbar">
-                    <a href="{{asset('assets/apartment.xlsx')}}" download="apartment.xlsx"
+                    <a href="{{asset('assets/excel/apartment.xlsx')}}" download="apartment.xlsx"
                         class="btn btn-light-primary me-3" data-bs-target="#kt_customers_export_modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -45,9 +45,8 @@
                 </div>
             </div>
             <!--begin::Form-->
-            <form id="create-form" action="{{route('apartment.import.store')}}" method="post"
-                enctype="multipart/form-data">
-                @csrf
+            <form id="create-form">
+                {{-- @csrf --}}
                 <div class="card-body">
 
                     <!--begin::compound name-->
@@ -65,8 +64,9 @@
                     <div class="row">
 
                         <div class="col-9">
-                            <button type="submit" id="button"
-                                class="btn btn-primary mr-2">{{__('site.submit')}}</button>
+                            <button type="button"
+                                onclick="importFile(document.getElementById('file').files[0],'/import/apartment','/apartment')"
+                                id="button" class="btn btn-primary mr-2">{{__('site.submit')}}</button>
                             <button type="reset" class="btn btn-secondary">{{__('site.cancel')}}</button>
                         </div>
                     </div>

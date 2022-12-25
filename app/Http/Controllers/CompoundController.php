@@ -43,34 +43,34 @@ class CompoundController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required | max:100',
-            'city' => 'required | max:100',
-            'address' => 'required | max:100',
+        $validator = Validator($request->all(), [
+            'name' => 'required | string | max:15',
+            'city' => 'required | string | max:15',
+            'address' => 'required | string | max:30',
             'images' => 'required | array',
         ]);
-        $compound = new  Compound();
-        $compound->name = $request->name;
-        $compound->city = $request->city;
-        $compound->address = $request->address;
-        $compound->property_owner_id = auth('owner')->user()->id;
-        $isSaved = $compound->save();
-        if ($request->images != null) {
-            foreach ($request->images as $image) {
-                $images = new Images();
-                $this->saveImage($image, 'images/compound', $images, $compound);
+        if (!$validator->fails()) {
+            $compound = new  Compound();
+            $compound->name = $request->name;
+            $compound->city = $request->city;
+            $compound->address = $request->address;
+            $compound->property_owner_id = auth('owner')->user()->id;
+            $isSaved = $compound->save();
+            if ($request->images != null) {
+                foreach ($request->images as $image) {
+                    $images = new Images();
+                    $this->saveImage($image, 'images/compound', $images, $compound);
+                }
             }
-        }
-        if ($isSaved) {
+
             return response()->json(
                 [
-                    'status' => true,
                     'message' => $isSaved ? __('site.compounds') : 'Create failed!'
                 ],
                 $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
             );
         } else {
-            return redirect()->back();
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -105,31 +105,31 @@ class CompoundController extends Controller
      */
     public function update(Request $request, Compound $compound)
     {
-        $request->validate([
-            'name' => 'required | max:100',
-            'city' => 'required | max:100',
-            'address' => 'required | max:100',
+        $validator = Validator($request->all(), [
+            'name' => 'required |string | max:15',
+            'city' => 'required |string | max:15',
+            'address' => 'required |string | max:30',
         ]);
-        $compound->name = $request->name;
-        $compound->city = $request->city;
-        $compound->address = $request->address;
-        $isSaved = $compound->save();
-        if ($request->images != null) {
-            foreach ($request->images as $image) {
-                $images = new Images();
-                $this->saveImage($image, 'images/compound', $images, $compound);
+        if (!$validator->fails()) {
+            $compound->name = $request->input('name');
+            $compound->city = $request->input('city');
+            $compound->address = $request->input('address');
+            $isSaved = $compound->save();
+            if ($request->images != null) {
+                foreach ($request->images as $image) {
+                    $images = new Images();
+                    $this->saveImage($image, 'images/compound', $images, $compound);
+                }
             }
-        }
-        if ($isSaved) {
+
             return response()->json(
                 [
-                    'status' => true,
                     'message' => $isSaved ? trans('site.compound_update') : 'Create failed!'
                 ],
                 $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
             );
         } else {
-            return redirect()->back();
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
         }
     }
 
@@ -225,14 +225,20 @@ class CompoundController extends Controller
     }
     function importShippment(Request $request)
     {
-        $request->validate([
+        $validator = Validator($request->all(), [
             'file' => 'required|mimes:xlsx,xls',
         ]);
-
-        $file = $request->file('file')->path();
-        $import = new CompoundsImport;
-        $import->import($file);
-
-        return redirect()->back();
+        if (!$validator->fails()) {
+            $file = $request->file('file')->path();
+            $import = new CompoundsImport;
+            $import->import($file);
+            return response()->json(
+                [
+                    'message' => 'File Added successfully'
+                ]
+            );
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

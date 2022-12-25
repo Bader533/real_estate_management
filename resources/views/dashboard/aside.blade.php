@@ -41,6 +41,16 @@
                     </a>
                 </div>
 
+                <div class="menu-item py-2">
+                    <a class="menu-link menu-center" href="{{route('tenant.index')}}" data-bs-trigger="hover"
+                        data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-people fs-2"></i>
+                        </span>
+                        <span class="menu-title">{{__("site.tenants")}}</span>
+                    </a>
+                </div>
+
                 {{-- <div data-kt-menu-trigger="click" data-kt-menu-placement="right-start" class="menu-item py-2">
                     <span class="menu-link menu-center" data-bs-trigger="hover" data-bs-dismiss="click"
                         data-bs-placement="right">

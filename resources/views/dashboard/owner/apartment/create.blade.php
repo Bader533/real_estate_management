@@ -11,6 +11,18 @@
     }
 </style>
 @endif
+<style>
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    /* Firefox */
+    input[type=number] {
+        -moz-appearance: textfield;
+    }
+</style>
 @endsection
 
 @section('pagename', __('site.apartment'))
@@ -114,26 +126,9 @@
                     <!--begin::apartment air conditioning -->
                     <div id="air_conditioning" class="fv-row mb-10">
                         <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.type_of_air_conditioning') }}</label>
-                        {{-- <div class="btn-group" id="div_radio">
-                            <input type="radio" class="btn-check" name="Conditioning" value="window" id="window"
-                                autocomplete="off" />
-                            <label class="btn btn-secondary" for="window">{{__('site.window')}}</label>
-
-                            <input type="radio" class="btn-check" name="Conditioning" value="split" id="split"
-                                autocomplete="off" />
-                            <label class="btn btn-secondary" for="split">{{__('site.split')}}</label>
-
-                            <input type="radio" class="btn-check" name="Conditioning" value="central" id="central"
-                                autocomplete="off" />
-                            <label class="btn btn-secondary" for="central">{{__('site.central')}}</label>
-
-                            <input type="radio" class="btn-check" name="Conditioning" value="not available"
-                                id="not_available" autocomplete="off" />
-                            <label class="btn btn-secondary" for="not_available">{{__('site.not_available')}}</label>
-
-                        </div> --}}
                         <div id="div_radio1">
-                            <input type="radio" name="conditioning" class="input_radio" value="window" id="window">
+                            <input type="radio" name="conditioning" class="input_radio" value="window" id="window"
+                                checked>
                             <label for="window" class="radio_label">{{ __('site.window') }}</label>
 
                             <input type="radio" name="conditioning" class="input_radio" value="split" id="split">
@@ -146,7 +141,6 @@
                                 id="not_available">
                             <label for="not_available" class="radio_label">{{ __('site.not_available') }}</label>
                         </div>
-
                     </div>
                     <!--end::apartment air conditioning -->
 
@@ -162,7 +156,7 @@
                                     </span>
                                 </div>
 
-                                <input type="text" class="form-control" name="floor" id="floorid"
+                                <input type="number" class="form-control" name="floor" id="floorid"
                                     aria-label="Amount (to the nearest dollar)">
                                 <div class="input-group-append">
                                     <span id="a_tag_left" class="input-group-text">
@@ -179,7 +173,7 @@
                                     <span id="a_tag_right" class="input-group-text"><a
                                             onclick="decreaseValue(this,'bedroomId')">-</a></span>
                                 </div>
-                                <input type="text" class="form-control" name="bedroom" id="bedroomId"
+                                <input type="number" class="form-control" name="bedroom" id="bedroomId"
                                     aria-label="Amount (to the nearest dollar)">
                                 <div class="input-group-append">
                                     <span id="a_tag_left" class="input-group-text"><a
@@ -203,7 +197,7 @@
                                     </span>
                                 </div>
 
-                                <input type="text" class="form-control" name="bathroom" id="bathroomId"
+                                <input type="number" class="form-control" name="bathroom" id="bathroomId"
                                     aria-label="Amount (to the nearest dollar)">
                                 <div class="input-group-append">
                                     <span id="a_tag_left" class="input-group-text">
@@ -220,7 +214,7 @@
                                     <span id="a_tag_right" class="input-group-text"><a
                                             onclick="decreaseValue(this,'councils')">-</a></span>
                                 </div>
-                                <input type="text" class="form-control" name="councils" id="councils"
+                                <input type="number" class="form-control" name="councils" id="councils"
                                     aria-label="Amount (to the nearest dollar)">
                                 <div class="input-group-append">
                                     <span id="a_tag_left" class="input-group-text"><a
@@ -245,7 +239,7 @@
                                     </span>
                                 </div>
 
-                                <input type="text" class="form-control" name="lounges" id="lounges"
+                                <input type="number" class="form-control" name="lounges" id="lounges"
                                     aria-label="Amount (to the nearest dollar)">
                                 <div class="input-group-append">
                                     <span id="a_tag_left" class="input-group-text">
@@ -257,21 +251,6 @@
                         </div>
                         <div id="condition" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.furnishing_condition') }}</label>
-                            {{-- <div class="input-group">
-                                <div class="btn-group" id="div_radio">
-                                    <input type="radio" class="btn-check" name="options" value="yes" id="option1"
-                                        autocomplete="off" />
-                                    <label class="btn btn-secondary" for="option1">{{__('site.yes')}}</label>
-
-                                    <input type="radio" class="btn-check" name="options" value="no" id="option2"
-                                        autocomplete="off" />
-                                    <label class="btn btn-secondary" for="option2">{{__('site.no')}}</label>
-
-
-                                </div> --}}
-
-                                {{--
-                            </div> --}}
                             <div style="direction: ltr" id="div_radio_2">
                                 <input type="radio" name="furnishing_condition" class="input_radio_2" value="yes"
                                     id="yes" checked>
@@ -293,19 +272,6 @@
                     <div class="row">
                         <div id="parking" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.parking') }}</label>
-                            {{-- <div class="input-group">
-                                <div class="btn-group" id="div_radio">
-                                    <input type="radio" class="btn-check" name="parking" value="yes" id="yes"
-                                        autocomplete="off" />
-                                    <label class="btn btn-secondary" for="yes">{{__('site.yes')}}</label>
-
-                                    <input type="radio" class="btn-check" name="parking" value="no" id="no"
-                                        autocomplete="off" />
-                                    <label class="btn btn-secondary" for="no">{{__('site.no')}}</label>
-
-
-                                </div>
-                            </div> --}}
                             <div style="direction: ltr" id="div_radio_2">
                                 <input type="radio" name="parking" class="input_radio_2" value="yes" id="yes_2" checked>
                                 <label for="yes_2" class="radio_label_2"
@@ -320,19 +286,6 @@
                         </div>
                         <div id="kitchen" class="col-lg-6 fv-row">
                             <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.type_of_kitchen') }}</label>
-                            {{-- <div class="input-group">
-                                <div class="btn-group" id="div_radio">
-                                    <input type="radio" class="btn-check" name="kitchen" value="open" id="open"
-                                        autocomplete="off" />
-                                    <label class="btn btn-secondary" for="open">{{__('site.open')}}</label>
-
-                                    <input type="radio" class="btn-check" name="kitchen" value="closed" id="closed"
-                                        autocomplete="off" />
-                                    <label class="btn btn-secondary" for="closed">{{__('site.closed')}}</label>
-
-
-                                </div>
-                            </div> --}}
                             <div style="direction: ltr" id="div_radio_2">
                                 <input type="radio" name="kitchen" class="input_radio_2" value="open" id="open" checked>
                                 <label for="open" class="radio_label_2"

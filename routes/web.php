@@ -7,6 +7,7 @@ use App\Http\Controllers\CompoundController;
 use App\Http\Controllers\CompoundImageController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PropertyOwnerController;
+use App\Http\Controllers\TenantController;
 use App\Models\PropertyOwner;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -22,6 +23,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
+Route::get('register', [AuthController::class, 'showRegister'])->name('register.create');
+Route::post('register', [AuthController::class, 'register'])->name('register.store');
 
 Route::middleware('guest:owner,admin,employee')->group(function () {
     Route::get('{guard}/login', [AuthController::class, 'showLogin'])->name('dashboard.login');
@@ -62,6 +65,13 @@ Route::group(
         Route::get('import/apartment', [ApartmentController::class, 'viewImport'])->name('apartment.import');
         Route::post('import/apartment', [ApartmentController::class, 'importApartment'])->name('apartment.import.store');
         /* ************************** end apartment ************************** */
+
+        /* ************************** tenant ************************** */
+        Route::resource('tenant', TenantController::class);
+        Route::get('search/tenant', [TenantController::class, 'search'])->name('tenant.search');
+        Route::get('import/tenant', [TenantController::class, 'viewImport'])->name('tenant.import');
+        Route::post('import/tenant', [TenantController::class, 'importTenants'])->name('tenant.import.store');
+        /* ************************** end tenant ************************** */
 
         //delete images ..
         Route::delete('compound/image/{id}', [CompoundImageController::class, 'deleteImage'])->name('compound.image.delete');

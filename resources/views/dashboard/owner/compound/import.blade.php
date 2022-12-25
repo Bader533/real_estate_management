@@ -24,7 +24,7 @@
             <div class="card-header">
                 <h3 class="card-title">Add Compound </h3>
                 <div class="card-toolbar">
-                    <a href="{{asset('assets/compound.xlsx')}}" download="compound.xlsx"
+                    <a href="{{asset('assets/excel/compound.xlsx')}}" download="compound.xlsx"
                         class="btn btn-light-primary me-3" data-bs-target="#kt_customers_export_modal">
                         <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
                         <span class="svg-icon svg-icon-2">
@@ -45,9 +45,8 @@
                 </div>
             </div>
             <!--begin::Form-->
-            <form id="create-form" action="{{route('compound.import.store')}}" method="post"
-                enctype="multipart/form-data">
-                @csrf
+            <form id="create-form">
+                {{-- @csrf --}}
                 <div class="card-body">
 
                     <!--begin::compound name-->
@@ -65,8 +64,9 @@
                     <div class="row">
 
                         <div class="col-9">
-                            <button type="submit" id="button"
-                                class="btn btn-primary mr-2">{{__('site.submit')}}</button>
+                            <button type="button"
+                                onclick="importFile(document.getElementById('file').files[0],'/import/compound','/compound')"
+                                id="button" class="btn btn-primary mr-2">{{__('site.submit')}}</button>
                             <button type="reset" class="btn btn-secondary">{{__('site.cancel')}}</button>
                         </div>
                     </div>
@@ -85,4 +85,7 @@
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
 <script src="{{ asset('assets/js/app.js') }}"></script>
 <script src="{{ asset('assets/js/crud.js') }}"></script>
+<script>
+
+</script>
 @endsection

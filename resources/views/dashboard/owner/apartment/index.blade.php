@@ -75,7 +75,8 @@
                             </a></li>
                         <li class="nav-item" role="presentation"><a href="{{route('apartment.index')}}">
                                 <button class="nav-link rounded-5 active" id="home-tab2" data-bs-toggle="tab"
-                                    type="button" role="tab" aria-selected="true"> {{__('site.apartments')}} </button>
+                                    type="button" role="tab" aria-selected="true"> {{__('site.one_apartment')}}
+                                </button>
                             </a></li>
                     </ul>
                 </div>
@@ -120,7 +121,9 @@
                                 <div class="col-md-8">
                                     <div class="card-body">
                                         <div style="display: flex; justify-content: space-between;">
-                                            <h5 class="card-title text-start ">{{$apartment->apartment_name}}</h5>
+                                            <h5 class="card-title text-start "><a
+                                                    href="{{route('apartment.show',$apartment->id)}}">{{$apartment->apartment_name}}</a>
+                                            </h5>
                                             <a href="{{route('apartment.edit',$apartment->id)}}"
                                                 style="text-decoration: none; color: #17191b;">Edit</a>
                                         </div>

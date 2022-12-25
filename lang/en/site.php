@@ -179,6 +179,24 @@ return [
     'split' => 'Split',
     'central' => 'Central',
     'not_available' => 'Not Available',
+    'tenants' => 'Tenants',
+    "tenant_info" => "Tenant Information",
+    'search_tenants' => 'Search Tenants',
+    'add_tenant' => 'Add Tenant',
+    "add_new_tenant" => "Add New Tenant",
+    "one_tenant" => "Tenant",
+
+
+    "rental_details" => "Rental details",
+    "rental_details" => "Rental Details",
+    "contract_number" => "Contract Number",
+    "contract_starting_date" => "Contract Starting Date",
+    "contract_end_date" => "Contract End Date",
+    "total_rental_amount" => "Total Rental Amount",
+    "guarantee_amount" => "Guarantee Amount",
+    "number_of_batches" => "The Number Of Batches",
+
+
 
 
     'open' => 'Open',
