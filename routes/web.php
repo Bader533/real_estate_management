@@ -7,6 +7,7 @@ use App\Http\Controllers\CompoundController;
 use App\Http\Controllers\CompoundImageController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PropertyOwnerController;
+use App\Http\Controllers\TenantController;
 use App\Models\PropertyOwner;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -22,6 +23,8 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
+Route::get('register', [AuthController::class, 'showRegister'])->name('register.create');
+Route::post('register', [AuthController::class, 'register'])->name('register.store');
 
 Route::middleware('guest:owner,admin,employee')->group(function () {
     Route::get('{guard}/login', [AuthController::class, 'showLogin'])->name('dashboard.login');
@@ -34,7 +37,7 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:admin,employee,owner']
     ],
     function () {
-        Route::view('', 'dashboard.home_page')->name('page.home');
+        Route::get('', [Controller::class, 'homeController'])->name('page.home');
 
         /* ************************** owner ************************** */
         Route::resource('owner', PropertyOwnerController::class);
@@ -43,19 +46,32 @@ Route::group(
         /* ************************** compound ************************** */
         Route::resource('compound', CompoundController::class);
         Route::get('search', [CompoundController::class, 'search'])->name('search');
+        Route::get('import/compound', [CompoundController::class, 'viewImport'])->name('compound.import');
+        Route::post('import/compound', [CompoundController::class, 'importShippment'])->name('compound.import.store');
         /* ************************** end compound ************************** */
 
         /* ************************** building ************************** */
         Route::resource('building', BuildingController::class);
         Route::delete('building/image/{id}', [BuildingController::class, 'deleteImage'])->name('building.image.delete');
         Route::get('search/building', [BuildingController::class, 'search'])->name('building.search');
+        Route::get('import/building', [BuildingController::class, 'viewImport'])->name('building.import');
+        Route::post('import/building', [BuildingController::class, 'importShippment'])->name('building.import.store');
         /* ************************** end building ************************** */
 
         /* ************************** apartment ************************** */
         Route::resource('apartment', ApartmentController::class);
-        Route::delete('apartment/image/{id}', [BuildingController::class, 'deleteImage'])->name('apartment.image.delete');
-        Route::get('search/apartment', [BuildingController::class, 'search'])->name('apartment.search');
+        Route::delete('apartment/image/{id}', [ApartmentController::class, 'deleteImage'])->name('apartment.image.delete');
+        Route::get('search/apartment', [ApartmentController::class, 'search'])->name('apartment.search');
+        Route::get('import/apartment', [ApartmentController::class, 'viewImport'])->name('apartment.import');
+        Route::post('import/apartment', [ApartmentController::class, 'importApartment'])->name('apartment.import.store');
         /* ************************** end apartment ************************** */
+
+        /* ************************** tenant ************************** */
+        Route::resource('tenant', TenantController::class);
+        Route::get('search/tenant', [TenantController::class, 'search'])->name('tenant.search');
+        Route::get('import/tenant', [TenantController::class, 'viewImport'])->name('tenant.import');
+        Route::post('import/tenant', [TenantController::class, 'importTenants'])->name('tenant.import.store');
+        /* ************************** end tenant ************************** */
 
         //delete images ..
         Route::delete('compound/image/{id}', [CompoundImageController::class, 'deleteImage'])->name('compound.image.delete');

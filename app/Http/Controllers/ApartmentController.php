@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\ApartmentsImport;
 use App\Models\Apartment;
 use Illuminate\Http\Request;
 use App\Models\Image as Images;
@@ -42,7 +43,6 @@ class ApartmentController extends Controller
      */
     public function store(Request $request)
     {
-        // dd($request->kind);
         $validator = Validator($request->all(), [
             'kind' => 'required | string ',
             'name' => 'required | string |max:50',
@@ -51,16 +51,16 @@ class ApartmentController extends Controller
             'space' => 'required | numeric  ',
             'date' => 'required_if:kind,apartment,villa',
             'conditioning' => 'required_if:kind,apartment,villa | string | max:50 ',
-            'floor' => 'required_if:kind,apartment|numeric ',
-            'bedroom' => 'required_if:kind,apartment,villa | numeric ',
-            'bathroom' => 'required_if:kind,apartment,villa | numeric ',
-            'councils' => 'required_if:kind,apartment,villa | numeric ',
+            'floor' => 'required_if:kind,apartment',
+            'bedroom' => 'required_if:kind,apartment,villa ',
+            'bathroom' => 'required_if:kind,apartment,villa ',
+            'councils' => 'required_if:kind,apartment,villa ',
             'lounges' => 'required_if:kind,apartment,villa  ',
             'furnishing_condition' => 'required_if:kind,apartment,villa | in:yes,no ',
             'parking' => 'required_if:kind,apartment,villa | in:yes,no ',
             'kitchen' => 'required_if:kind,apartment,villa | in:open,closed ',
-            'electricity_meter_number' => 'required_if:kind,apartment,villa | numeric | digits_between:1,20 ',
-            'water_meter_number' => 'required_if:kind,apartment,villa | numeric | digits_between:1,20  ',
+            'electricity_meter_number' => 'required_if:kind,apartment,villa | max:20 ',
+            'water_meter_number' => 'required_if:kind,apartment,villa | max:20  ',
         ]);
         if (!$validator->fails()) {
             $apartment = new Apartment();
@@ -118,7 +118,7 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        //
+        return view('dashboard.owner.apartment.show', ['apartment' => $apartment]);
     }
 
     /**
@@ -129,7 +129,7 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        //
+        return view('dashboard.owner.apartment.edit', ['apartment' => $apartment]);
     }
 
     /**
@@ -141,7 +141,72 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        //
+        // dd($request->kind);
+        $validator = Validator($request->all(), [
+            'kind' => 'required | string ',
+            'name' => 'required | string |max:50',
+            'city' => 'required | string | max:100 ',
+            'address' => 'required | string | max:100 ',
+            'space' => 'required | numeric  ',
+            'date' => 'required_if:kind,apartment,villa',
+            'conditioning' => 'required_if:kind,apartment,villa | string | max:50 ',
+            'floor' => 'required_if:kind,apartment|numeric ',
+            'bedroom' => 'required_if:kind,apartment,villa | numeric ',
+            'bathroom' => 'required_if:kind,apartment,villa | numeric ',
+            'councils' => 'required_if:kind,apartment,villa | numeric ',
+            'lounges' => 'required_if:kind,apartment,villa  ',
+            'furnishing_condition' => 'required_if:kind,apartment,villa | in:yes,no ',
+            'parking' => 'required_if:kind,apartment,villa | in:yes,no ',
+            'kitchen' => 'required_if:kind,apartment,villa | in:open,closed ',
+            'electricity_meter_number' => 'required_if:kind,apartment,villa | numeric | digits_between:1,20 ',
+            'water_meter_number' => 'required_if:kind,apartment,villa | numeric | digits_between:1,20  ',
+        ]);
+        if (!$validator->fails()) {
+            // $apartment = new Apartment();
+            $apartment->kind = $request->input('kind');
+            $apartment->apartment_name = $request->input('name');
+            $apartment->city = $request->input('city');
+            $apartment->address = $request->input('address');
+            $apartment->space = $request->input('space');
+
+            if (
+                $request->input('kind') == 'apartment' ||
+                $request->input('kind') == 'villa'
+            ) {
+                $apartment->apartment_date_added = Carbon::parse($request->input('date'));
+                $apartment->ac_type = $request->input('conditioning');
+
+                if ($request->input('kind') == 'apartment') {
+                    $apartment->floor_number = $request->input('floor');
+                }
+
+                $apartment->number_of_bedrooms = $request->input('bedroom');
+                $apartment->number_of_bathrooms = $request->input('bathroom');
+                $apartment->number_of_councils = $request->input('councils');
+                $apartment->number_of_lounges = $request->input('lounges');
+                $apartment->furnishing_condition = $request->input('furnishing_condition');
+                $apartment->parking = $request->input('parking');
+                $apartment->type_of_kitchen = $request->input('kitchen');
+                $apartment->electricity_meter_number = $request->input('electricity_meter_number');
+                $apartment->water_meter_number = $request->input('water_meter_number');
+            }
+            $apartment->property_owner_id = auth('owner')->user()->id;
+            $isSaved = $apartment->save();
+            if ($request->images != null) {
+                foreach ($request->images as $image) {
+                    $images = new Images();
+                    $this->saveImage($image, 'images/apartment', $images, $apartment);
+                }
+            }
+            return response()->json(
+                [
+                    'message' => $isSaved ? 'apartment updated successfully' : 'updated failed!'
+                ],
+                $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
+            );
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -198,7 +263,7 @@ class ApartmentController extends Controller
                         '<div class="col-md-8">' .
                         '<div class="card-body">' .
                         '<div style="display: flex; justify-content: space-between;">' .
-                        ' <h5 class="card-title text-start ">' . $apartment->name . '</h5>' .
+                        ' <h5 class="card-title text-start ">' . $apartment->apartment_name . '</h5>' .
                         '<a href="' . route('apartment.edit', $apartment->id) . '"  style="text-decoration: none; color: #17191b;">Edit</a>' .
                         '</div>' .
                         '<ul class="text-start" style="list-style-type: none; padding: 0;">
@@ -246,6 +311,31 @@ class ApartmentController extends Controller
             );
 
             echo json_encode($data);
+        }
+    }
+
+    function viewImport()
+    {
+        return view('dashboard.owner.apartment.import');
+    }
+
+    function importApartment(Request $request)
+    {
+
+        $validator = Validator($request->all(), [
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+        if (!$validator->fails()) {
+            $file = $request->file('file')->path();
+            $import = new ApartmentsImport;
+            $import->import($file);
+            return response()->json(
+                [
+                    'message' => 'File Added successfully'
+                ]
+            );
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
         }
     }
 }

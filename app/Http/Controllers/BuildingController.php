@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\BuildingsImport;
 use App\Models\Building;
 use Illuminate\Http\Request;
 use App\Models\Image as Images;
@@ -352,6 +353,39 @@ class BuildingController extends Controller
             );
 
             echo json_encode($data);
+        }
+    }
+
+    function viewImport()
+    {
+        return view('dashboard.owner.building.import');
+    }
+    function importShippment(Request $request)
+    {
+        // $request->validate([
+        //     'file' => 'required|mimes:xlsx,xls',
+        // ]);
+
+        // $file = $request->file('file')->path();
+        // $import = new BuildingsImport;
+        // $import->import($file);
+
+        // return redirect()->back();
+
+        $validator = Validator($request->all(), [
+            'file' => 'required|mimes:xlsx,xls',
+        ]);
+        if (!$validator->fails()) {
+            $file = $request->file('file')->path();
+            $import = new BuildingsImport;
+            $import->import($file);
+            return response()->json(
+                [
+                    'message' => 'File Added successfully'
+                ]
+            );
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
         }
     }
 }

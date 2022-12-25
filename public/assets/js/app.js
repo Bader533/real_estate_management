@@ -1,7 +1,7 @@
 let files = [],
-    button = document.querySelector(".top button"),
-    form = document.querySelector("form"),
-    container = document.querySelector(".container");
+button = document.querySelector(".top button"),
+form = document.querySelector("form"),
+container = document.querySelector(".container");
 text = document.querySelector(".inner");
 browse = document.querySelector(".select");
 input = document.querySelector(".file");
@@ -64,7 +64,7 @@ function addCompound(id) {
     const button = document.getElementById("button");
     console.log(button.innerHTML);
 
-    if (button.innerHTML === "Submit") {
+    if (button.innerHTML === "Submit" || button.innerHTML === "إرسال") {
         formData.append("_method", "POST");
         store("/compound", formData, "/compound");
     } else {
@@ -92,7 +92,7 @@ function addBuilding(id) {
     const button = document.getElementById("button");
     console.log(button.innerHTML);
 
-    if (button.innerHTML === "Submit") {
+    if (button.innerHTML === "Submit" || button.innerHTML === "إرسال") {
         formData.append("_method", "POST");
         store("/building", formData, "/building");
     } else {
@@ -101,31 +101,26 @@ function addBuilding(id) {
     }
 }
 
-//add building and update
+//add apartment and update
 function addApartment(id) {
     let formData = new FormData();
-    // alert("Not checked");
     formData.append("kind",document.querySelector('[name="kind"]:checked').value);
     formData.append("name", document.getElementById("name").value);
     formData.append("city", document.getElementById("city").value);
     formData.append("address", document.getElementById("address").value);
     formData.append("space", document.getElementById("space").value);
-    if ($('input[type="kind"]:checked').value === 'apartment' || $('input[type="kind"]:checked').value === 'villa' ) {
-        formData.append("date", document.getElementById("dateId").value);
-        formData.append("conditioning",document.querySelector('[name="conditioning"]:checked').value);
-        if($('input[type="kind"]:checked').value == 'apartment'){
-            formData.append("floor", document.getElementById("floorid").value);
-        }
-        formData.append("bedroom", document.getElementById("bedroomId").value);
-        formData.append("bathroom", document.getElementById("bathroomId").value);
-        formData.append("councils", document.getElementById("councils").value);
-        formData.append("lounges", document.getElementById("lounges").value);
-        formData.append("electricity_meter_number",document.getElementById("electricity_meter_number").value);
-        formData.append("water_meter_number",document.getElementById("water_meter_number").value);
-        formData.append("furnishing_condition",document.querySelector('[name="furnishing_condition"]:checked').value);
-        formData.append("parking",document.querySelector('[name="parking"]:checked').value);
-        formData.append("kitchen",document.querySelector('[name="kitchen"]:checked').value);
-    }
+    formData.append("date", document.getElementById("dateId").value);
+    formData.append("conditioning",document.querySelector('[name="conditioning"]:checked').value);
+    formData.append("floor", document.getElementById("floorid").value);
+    formData.append("bedroom", document.getElementById("bedroomId").value);
+    formData.append("bathroom", document.getElementById("bathroomId").value);
+    formData.append("councils", document.getElementById("councils").value);
+    formData.append("lounges", document.getElementById("lounges").value);
+    formData.append("electricity_meter_number",document.getElementById("electricity_meter_number").value);
+    formData.append("water_meter_number",document.getElementById("water_meter_number").value);
+    formData.append("furnishing_condition",document.querySelector('[name="furnishing_condition"]:checked').value);
+    formData.append("parking",document.querySelector('[name="parking"]:checked').value);
+    formData.append("kitchen",document.querySelector('[name="kitchen"]:checked').value);
 
     for (const image of images) {
         formData.append("images[]", image);
@@ -133,7 +128,7 @@ function addApartment(id) {
     const button = document.getElementById("button");
     console.log(button.innerHTML);
 
-    if (button.innerHTML === "Submit") {
+    if (button.innerHTML === "Submit" || button.innerHTML === "إرسال") {
         formData.append("_method", "POST");
         store("/apartment", formData, "/apartment");
     } else {
@@ -141,3 +136,12 @@ function addApartment(id) {
         updatefromdata("/apartment/" + id, formData, "/apartment");
     }
 }
+
+function importFile(fileElement,url,redirectUrl) {
+    let formData = new FormData();
+
+    formData.append("file",fileElement);
+    store(url, formData, redirectUrl);
+}
+
+

@@ -36,7 +36,7 @@
             </div>
 
             <div class="card-toolbar">
-                <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal"
+                <a href="{{route('compound.import')}}" class="btn btn-light-primary me-3"
                     data-bs-target="#kt_customers_export_modal">
                     <!--begin::Svg Icon | path: icons/duotune/arrows/arr078.svg-->
                     <span class="svg-icon svg-icon-2">
@@ -52,7 +52,7 @@
                         </svg>
                     </span>
                     <!--end::Svg Icon-->Import
-                </button>
+                </a>
                 <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                     <a href="{{ route('compound.create') }}" class="btn btn-primary">{{__('site.add_compound')}}</a>
 
@@ -76,7 +76,7 @@
                             </a></li>
                         <li class="nav-item" role="presentation"><a href="{{route('apartment.index')}}">
                                 <button class="nav-link rounded-5 " id="home-tab2" data-bs-toggle="tab" type="button"
-                                    role="tab" aria-selected="true"> {{__('site.apartments')}} </button>
+                                    role="tab" aria-selected="true"> {{__('site.one_apartment')}} </button>
                             </a></li>
                     </ul>
                 </div>
