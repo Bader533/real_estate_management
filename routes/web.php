@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BuildingController;
 use App\Http\Controllers\CompoundController;
 use App\Http\Controllers\CompoundImageController;
+use App\Http\Controllers\ContractController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\PropertyOwnerController;
 use App\Http\Controllers\TenantController;
@@ -64,6 +65,8 @@ Route::group(
         Route::get('search/apartment', [ApartmentController::class, 'search'])->name('apartment.search');
         Route::get('import/apartment', [ApartmentController::class, 'viewImport'])->name('apartment.import');
         Route::post('import/apartment', [ApartmentController::class, 'importApartment'])->name('apartment.import.store');
+        Route::post('update/apartment/details/{apartment_id}', [ApartmentController::class, 'updateApartment'])->name('apartment.update.details');
+
         /* ************************** end apartment ************************** */
 
         /* ************************** tenant ************************** */
@@ -72,6 +75,13 @@ Route::group(
         Route::get('import/tenant', [TenantController::class, 'viewImport'])->name('tenant.import');
         Route::post('import/tenant', [TenantController::class, 'importTenants'])->name('tenant.import.store');
         /* ************************** end tenant ************************** */
+
+        /* ************************** rentals ************************** */
+        Route::resource('rentals', ContractController::class);
+        // Route::view('rentals', 'dashboard.owner.rentals.create');
+        Route::get('rentals/create/{id}', [ContractController::class, 'create'])->name('rentals.create.id');
+        // Route::post('import/tenant', [TenantController::class, 'importTenants'])->name('tenant.import.store');
+        /* ************************** end rentals ************************** */
 
         //delete images ..
         Route::delete('compound/image/{id}', [CompoundImageController::class, 'deleteImage'])->name('compound.image.delete');

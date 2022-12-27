@@ -18,4 +18,14 @@ class Apartment extends Model
     {
         return $this->morphMany(Image::class, 'object', 'object_type', 'object_id', 'id');
     }
+
+    public function compound()
+    {
+        return $this->belongsTo(Compound::class);
+    }
+
+    public function building()
+    {
+        return $this->belongsTo(Building::class);
+    }
 }

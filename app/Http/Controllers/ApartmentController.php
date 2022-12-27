@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Imports\ApartmentsImport;
 use App\Models\Apartment;
+use App\Models\Building;
+use App\Models\Compound;
 use Illuminate\Http\Request;
 use App\Models\Image as Images;
 use App\Traits\image;
@@ -118,7 +120,16 @@ class ApartmentController extends Controller
      */
     public function show(Apartment $apartment)
     {
-        return view('dashboard.owner.apartment.show', ['apartment' => $apartment]);
+        $compounds = Compound::get();
+        $buildings = Building::get();
+        return view(
+            'dashboard.owner.apartment.show',
+            [
+                'apartment' => $apartment,
+                'compounds' => $compounds,
+                'buildings' => $buildings
+            ]
+        );
     }
 
     /**
@@ -336,6 +347,33 @@ class ApartmentController extends Controller
             );
         } else {
             return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    function updateApartment(Request $request, $id)
+    {
+        if ($request->typeData == 'compound') {
+            $apartment = Apartment::findOrFail($id);
+            $apartment->compound_id = $request->id;
+            $isSaved = $apartment->save();
+            return response()->json(
+                [
+                    'message' => $isSaved ? 'Compound updated successfully' : 'updated failed!'
+                ],
+                $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
+            );
+        } else if ($request->typeData == 'building') {
+            $apartment = Apartment::findOrFail($id);
+            $apartment->building_id = $request->id;
+            $isSaved = $apartment->save();
+            return response()->json(
+                [
+                    'message' => $isSaved ? 'Building updated successfully' : 'updated failed!'
+                ],
+                $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
+            );
+        } else {
+            return response()->json(['message' => 'updated failed !'], Response::HTTP_BAD_REQUEST);
         }
     }
 }

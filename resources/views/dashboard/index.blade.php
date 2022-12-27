@@ -2043,7 +2043,7 @@ License: For each use you must have a valid license purchased only from above li
                                         <!--end::Description-->
                                         <!--begin::Illustration-->
                                         <div class="text-center px-4 py-15">
-                                            <img src="assets/media/illustrations/sketchy-1/9.png" alt=""
+                                            <img src="{{asset('assets/media/illustrations/sketchy-1/9.png')}}" alt=""
                                                 class="w-100 mh-300px" />
                                         </div>
                                         <!--end::Illustration-->
