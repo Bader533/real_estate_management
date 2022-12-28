@@ -52,7 +52,7 @@
                 </div>
 
                 <div class="menu-item py-2">
-                    <a class="menu-link menu-center" href="{{route('tenant.index')}}" data-bs-trigger="hover"
+                    <a class="menu-link menu-center" href="{{route('finance.index')}}" data-bs-trigger="hover"
                         data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon me-0">
                             <i class="bi bi-cash-coin"></i>

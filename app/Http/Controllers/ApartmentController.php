@@ -6,6 +6,7 @@ use App\Imports\ApartmentsImport;
 use App\Models\Apartment;
 use App\Models\Building;
 use App\Models\Compound;
+use App\Models\Contract;
 use Illuminate\Http\Request;
 use App\Models\Image as Images;
 use App\Traits\image;
@@ -122,11 +123,13 @@ class ApartmentController extends Controller
     {
         $compounds = Compound::get();
         $buildings = Building::get();
+        $contract = Contract::where('apartment_id', $apartment->id)->where('is_active', '1')->first();
         return view(
             'dashboard.owner.apartment.show',
             [
                 'apartment' => $apartment,
                 'compounds' => $compounds,
+                'contract' => $contract,
                 'buildings' => $buildings
             ]
         );

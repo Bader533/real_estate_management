@@ -213,6 +213,15 @@ return [
     "lease_contract_data" => "Lease contract data",
     "or_add_new_tenant" => "Or Add New Tenant",
     "finance" => "Finance",
+    "evacuation" => "Eviction",
+    "renewal" => "Renewal",
+    'designation' => 'Designation',
+    "all_operations" => "All Operations",
+    "add_date" => "Add Date",
+    "my_profile" => "My Profile",
+
+
+
 
 
 

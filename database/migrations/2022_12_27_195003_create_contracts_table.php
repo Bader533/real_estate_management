@@ -24,6 +24,7 @@ return new class extends Migration
             $table->foreignId('property_owner_id')->constrained();
             $table->foreignId('apartment_id')->constrained();
             $table->foreignId('tenant_id')->constrained();
+            $table->integer('is_active');
             $table->timestamps();
         });
     }

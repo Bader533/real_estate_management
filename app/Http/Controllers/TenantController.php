@@ -42,12 +42,16 @@ class TenantController extends Controller
             'name' => 'required | string  |max:50 ',
             'email' => 'required | string | max:50',
             'phone' => 'required | numeric',
+            'nationality' => 'required | string | max:50',
+            'id_number' => 'required | numeric',
         ]);
         if (!$validator->fails()) {
             $tenant = new Tenant();
             $tenant->name = $request->input('name');
             $tenant->email = $request->input('email');
             $tenant->phone = $request->input('phone');
+            $tenant->nationality = $request->input('nationality');
+            $tenant->ssl = $request->input('id_number');
             $tenant->property_owner_id = auth('owner')->user()->id;
             $isSaved = $tenant->save();
             return response()->json(
@@ -96,12 +100,15 @@ class TenantController extends Controller
             'name' => 'required | string  |max:50 ',
             'email' => 'required | string | max:50',
             'phone' => 'required | numeric',
+            'nationality' => 'required | string | max:50',
+            'id_number' => 'required | numeric',
         ]);
         if (!$validator->fails()) {
-            // $tenant = new Tenant();
             $tenant->name = $request->input('name');
             $tenant->email = $request->input('email');
             $tenant->phone = $request->input('phone');
+            $tenant->nationality = $request->input('nationality');
+            $tenant->ssl = $request->input('id_number');
             $tenant->property_owner_id = auth('owner')->user()->id;
             $isSaved = $tenant->save();
             return response()->json(
@@ -179,6 +186,7 @@ class TenantController extends Controller
     {
         return view('dashboard.owner.tenant.import');
     }
+
     function importTenants(Request $request)
     {
         $validator = Validator($request->all(), [

@@ -157,19 +157,31 @@ function addRental() {
     for (const image of images) {
         formData.append("images[]", image);
     }
-    const button = document.getElementById("button");
-    console.log(button.innerHTML);
+    // const button = document.getElementById("button");
+    // console.log(button.innerHTML);
 
     formData.append("_method", "POST");
     store("/rentals", formData, "/apartment");
 
-    // if (button.innerHTML === "Submit" || button.innerHTML === "إرسال") {
-    //     formData.append("_method", "POST");
-    //     store("/rentals", formData, "/apartment");
-    // } else {
-    //     formData.append("_method", "PUT");
-    //     updatefromdata("/apartment/" + id, formData, "/apartment");
-    // }
+}
+
+//edit Rental
+function editRental(id) {
+    let formData = new FormData();
+    formData.append("from", document.getElementById("from").value);
+    formData.append("to", document.getElementById("to").value);
+    formData.append("number_of_batches", document.getElementById("number_of_batches").value);
+    formData.append("total_amount_of_rent", document.getElementById("total_amount_of_rent").value);
+    formData.append("guarantee_amount", document.getElementById("guarantee_amount").value);
+    formData.append("payment_method", document.getElementById("payment_method").value);
+
+    for (const image of images) {
+        formData.append("images[]", image);
+    }
+
+    formData.append("_method", "PUT");
+    updatefromdata("/rental/"+ id, formData, "/apartment");
+
 }
 
 function importFile(fileElement,url,redirectUrl) {

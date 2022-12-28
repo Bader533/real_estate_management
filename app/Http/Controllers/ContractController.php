@@ -48,7 +48,7 @@ class ContractController extends Controller
             'total_amount_of_rent' => 'required',
             'guarantee_amount' => 'required',
             'payment_method' => 'required',
-            'tenant_id' => 'required ',
+            // 'tenant_id' => 'required ',
         ]);
         if ($request->input('tenant_id') == null) {
             $validatorTenant = Validator($request->all(), [
@@ -65,6 +65,7 @@ class ContractController extends Controller
                 $tenant->ssl = $request->input('ssl');
                 $tenant->phone = $request->input('phone');
                 $tenant->email = $request->input('email');
+                $tenant->property_owner_id = auth('owner')->user()->id;
                 $isTenantSaved = $tenant->save();
             } else {
                 return response()->json(['message' => $validatorTenant->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
@@ -80,6 +81,7 @@ class ContractController extends Controller
             $contract->payment_method = $request->input('payment_method');
             $contract->property_owner_id = auth('owner')->user()->id;
             $contract->apartment_id = $request->input('apartment_id');
+            $contract->is_active = 1;
             if ($request->input('tenant_id') == null) {
                 $contract->tenant_id = $tenant->id;
             } else {
@@ -122,9 +124,11 @@ class ContractController extends Controller
      * @param  \App\Models\Contract  $contract
      * @return \Illuminate\Http\Response
      */
-    public function edit(Contract $contract)
+    public function edit($id)
     {
-        //
+
+        $contract = auth('owner')->user()->contracts()->where('id', $id)->where('is_active', 1)->first();
+        return view('dashboard.owner.rentals.edit', ['contract' => $contract]);
     }
 
     /**
@@ -134,9 +138,34 @@ class ContractController extends Controller
      * @param  \App\Models\Contract  $contract
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Contract $contract)
+    public function update(Request $request, $id)
     {
-        //
+        $validator = Validator($request->all(), [
+            'from' => 'required ',
+            'to' => 'required ',
+            'number_of_batches' => 'required | numeric',
+            'total_amount_of_rent' => 'required | numeric',
+            'guarantee_amount' => 'required | numeric',
+            'payment_method' => 'required | numeric',
+        ]);
+        if (!$validator->fails()) {
+            $contract = auth('owner')->user()->contracts()->where('id', $id)->where('is_active', 1)->first();
+            $contract->from = $request->input('from');
+            $contract->to = $request->input('to');
+            $contract->number_of_batches = $request->input('number_of_batches');
+            $contract->total_amount_of_rent = $request->input('total_amount_of_rent');
+            $contract->guarantee_amount = $request->input('guarantee_amount');
+            $contract->payment_method = $request->input('payment_method');
+            $isSaved = $contract->save();
+            return response()->json(
+                [
+                    'message' => $isSaved ? 'Contract updated successfully' : 'updated failed!'
+                ],
+                $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
+            );
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     /**
@@ -145,8 +174,19 @@ class ContractController extends Controller
      * @param  \App\Models\Contract  $contract
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Contract $contract)
+    public function destroy(Request $request, $id)
     {
-        //
+        // dd($request->endDate);
+        $contract = auth('owner')->user()->contracts()->where('id', $id)->where('is_active', 1)->first();
+
+        $contract->to = $request->input('endDate');
+        $contract->is_active = 0;
+        $isDeleled = $contract->save();
+        return response()->json(
+            [
+                'message' => $isDeleled ? 'Contract Deleted successfully' : 'Deleted failed!'
+            ],
+            $isDeleled ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
+        );
     }
 }

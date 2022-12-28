@@ -195,6 +195,81 @@
     </div>
     <!--end::Modal - compound - Add-->
 
+
+    <!--begin::Modal - contract - Add-->
+    @if ($contract != null)
+    <div class="modal fade" id="kt_modal_add_contract" tabindex="-1" aria-hidden="true">
+        <!--begin::Modal dialog-->
+        <div class="modal-dialog modal-dialog-centered mw-650px">
+            <!--begin::Modal content-->
+            <div class="modal-content">
+                <!--begin::Form-->
+                <form class="form" action="#" id="kt_modal_add_contract_form"
+                    data-kt-redirect="../../demo6/dist/apps/customers/list.html">
+                    <!--begin::Modal header-->
+                    <div class="modal-header" id="kt_modal_add_contract_header">
+                        <!--begin::Modal title-->
+                        <h2 class="fw-bolder">{{ __('site.add_new_compund') }}</h2>
+                        <!--end::Modal title-->
+                        <!--begin::Close-->
+                        <div id="kt_modal_add_contract_close" class="btn btn-icon btn-sm btn-active-icon-primary">
+                            <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
+                            <span class="svg-icon svg-icon-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                    fill="none">
+                                    <rect opacity="0.5" x="6" y="17.3137" width="16" height="2" rx="1"
+                                        transform="rotate(-45 6 17.3137)" fill="black" />
+                                    <rect x="7.41422" y="6" width="16" height="2" rx="1"
+                                        transform="rotate(45 7.41422 6)" fill="black" />
+                                </svg>
+                            </span>
+                            <!--end::Svg Icon-->
+                        </div>
+                        <!--end::Close-->
+                    </div>
+                    <div class="modal-body py-10 px-lg-17">
+
+                        <div class="scroll-y me-n7 pe-7" id="kt_modal_add_contract_scroll"
+                            data-kt-scroll-dependencies="#kt_modal_add_contract_header"
+                            data-kt-scroll-wrappers="#kt_modal_add_contract_scroll" data-kt-scroll-offset="300px">
+
+                            <div class="d-flex flex-column mb-7 fv-row">
+                                <label class="fs-6 fw-bold mb-2">
+                                    <span class="">End Date</span>
+
+                                </label>
+                                <input type="date" class="form-control form-control-solid" name="endDate" id="endDate"
+                                    placeholder="" value="" />
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!--begin::Modal footer-->
+                    <div class="modal-footer flex-center">
+                        <!--begin::Button-->
+                        <button type="reset" id="kt_modal_add_contract_cancel"
+                            class="btn btn-light me-3">Discard</button>
+                        <!--end::Button-->
+                        <!--begin::Button-->
+                        <button type="button" onclick="endContract('{{$contract->id}}')"
+                            id="kt_modal_add_contract_submit" class="btn btn-primary">
+                            <span class="indicator-label">Submit</span>
+                            <span class="indicator-progress">Please wait...
+                                <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                        </button>
+                        <!--end::Button-->
+                    </div>
+                    <!--end::Modal footer-->
+                </form>
+                <!--end::Form-->
+            </div>
+        </div>
+    </div>
+    @endif
+    <!--end::Modal - contract - Add-->
+
     <div class="row gy-5 gx-xl-10">
         <!--begin::apartment info-->
         <div class="col-xl-6">
@@ -411,28 +486,36 @@
                     </h3>
                     <div class="card-toolbar">
                         <ul class="nav">
+                            @if ($contract == null)
                             <li class="nav-item">
                                 <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px">
-                                    <a href="{{ route('rentals.create.id',$apartment->id) }}" class="">تعيين</a>
+                                    <a href="{{ route('rental.create.id',$apartment->id) }}"
+                                        class="">{{__('site.designation')}}</a>
                                 </div>
                             </li>
+                            @else
+                            <li class="nav-item">
+                                <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px">
+                                    <a data-bs-toggle="modal" data-bs-target="#kt_modal_add_contract"
+                                        class="">{{__('site.evacuation')}}</a>
+                                </div>
+                            </li>
+
+                            <li class="nav-item">
+                                <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px">
+                                    <a href="{{ route('rental.edit', $contract->id) }}"
+                                        class="">{{__('site.renewal')}}</a>
+                                </div>
+                            </li>
+
+                            @endif
+
                         </ul>
                     </div>
                 </div>
-
+                @if ($contract != null)
                 <div class="card-body pt-5">
 
-                    <!--begin::contract_number-->
-                    <div class="row mb-7">
-
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('site.contract_number') }}</label>
-
-                        <div class="col-lg-8">
-                            <span class="fw-bolder fs-6 text-gray-800">---</span>
-                        </div>
-
-                    </div>
-                    <!--end::contract_number-->
 
                     <!--begin::contract_starting_date-->
                     <div class="row mb-7">
@@ -440,7 +523,7 @@
                         <label class="col-lg-4 fw-bold text-muted">{{ __('site.contract_starting_date') }}</label>
 
                         <div class="col-lg-8 fv-row">
-                            <span class="fw-bold text-gray-800 fs-6">---</span>
+                            <span class="fw-bold text-gray-800 fs-6">{{$contract->from}}</span>
                         </div>
 
                     </div>
@@ -452,7 +535,7 @@
                         <label class="col-lg-4 fw-bold text-muted">{{ __('site.contract_end_date') }}</label>
 
                         <div class="col-lg-8">
-                            <span class="fw-bold text-gray-800 fs-6">---</span>
+                            <span class="fw-bold text-gray-800 fs-6">{{$contract->to}}</span>
                         </div>
 
                     </div>
@@ -464,7 +547,7 @@
                         <label class="col-lg-4 fw-bold text-muted">{{ __('site.total_rental_amount') }}</label>
 
                         <div class="col-lg-8">
-                            <span class="fw-bolder fs-6 text-gray-800">---</span>
+                            <span class="fw-bolder fs-6 text-gray-800">{{$contract->total_amount_of_rent}}</span>
                         </div>
 
                     </div>
@@ -476,7 +559,7 @@
                         <label class="col-lg-4 fw-bold text-muted">{{ __('site.guarantee_amount') }}</label>
 
                         <div class="col-lg-8">
-                            <span class="fw-bolder fs-6 text-gray-800">---</span>
+                            <span class="fw-bolder fs-6 text-gray-800">{{$contract->guarantee_amount}}</span>
                         </div>
 
                     </div>
@@ -488,13 +571,13 @@
                         <label class="col-lg-4 fw-bold text-muted">{{ __('site.number_of_batches') }}</label>
 
                         <div class="col-lg-8">
-                            <span class="fw-bolder fs-6 text-gray-800">---</span>
+                            <span class="fw-bolder fs-6 text-gray-800">{{$contract->number_of_batches}}</span>
                         </div>
 
                     </div>
                     <!--end::number_of_batches-->
                 </div>
-
+                @endif
             </div>
 
         </div>
@@ -509,7 +592,7 @@
                     <h3 class="card-title align-items-start flex-column">
                         <span class="card-label fw-bolder fs-3 mb-1">{{ __('site.one_tenant') }}</span>
                     </h3>
-                    <div class="card-toolbar">
+                    {{-- <div class="card-toolbar">
                         <ul class="nav">
                             <li class="nav-item">
                                 <div class="btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px">
@@ -517,9 +600,9 @@
                                 </div>
                             </li>
                         </ul>
-                    </div>
+                    </div> --}}
                 </div>
-
+                @if ($contract != null)
                 <div class="card-body pt-5">
 
                     <!--begin::contract_number-->
@@ -528,7 +611,7 @@
                         <label class="col-lg-4 fw-bold text-muted">{{ __('site.name') }}</label>
 
                         <div class="col-lg-8">
-                            <span class="fw-bolder fs-6 text-gray-800">---</span>
+                            <span class="fw-bolder fs-6 text-gray-800">{{$contract->tenant->name}}</span>
                         </div>
 
                     </div>
@@ -540,7 +623,7 @@
                         <label class="col-lg-4 fw-bold text-muted">{{ __('site.phone') }}</label>
 
                         <div class="col-lg-8 fv-row">
-                            <span class="fw-bold text-gray-800 fs-6">---</span>
+                            <span class="fw-bold text-gray-800 fs-6">{{$contract->tenant->phone}}</span>
                         </div>
 
                     </div>
@@ -552,7 +635,7 @@
                         <label class="col-lg-4 fw-bold text-muted">{{ __('site.email') }}</label>
 
                         <div class="col-lg-8">
-                            <span class="fw-bold text-gray-800 fs-6">---</span>
+                            <span class="fw-bold text-gray-800 fs-6">{{$contract->tenant->email}}</span>
                         </div>
 
                     </div>
@@ -564,7 +647,7 @@
                         <label class="col-lg-4 fw-bold text-muted">{{ __('site.SSl') }}</label>
 
                         <div class="col-lg-8">
-                            <span class="fw-bolder fs-6 text-gray-800">---</span>
+                            <span class="fw-bolder fs-6 text-gray-800">{{$contract->tenant->ssl}}</span>
                         </div>
 
                     </div>
@@ -573,16 +656,17 @@
                     <!--begin::guarantee_amount-->
                     <div class="row mb-7">
 
-                        <label class="col-lg-4 fw-bold text-muted">{{ __('site.gender') }}</label>
+                        <label class="col-lg-4 fw-bold text-muted">{{ __('site.nationality') }}</label>
 
                         <div class="col-lg-8">
-                            <span class="fw-bolder fs-6 text-gray-800">---</span>
+                            <span class="fw-bolder fs-6 text-gray-800">{{$contract->tenant->nationality}}</span>
                         </div>
 
                     </div>
                     <!--end::guarantee_amount-->
 
                 </div>
+                @endif
 
             </div>
 
@@ -601,11 +685,12 @@
 {{-- <script src="{{ asset('assets/js/app.js') }}"></script>--}}
 {{-- <script src="{{ asset('assets/js/crud.js') }}"></script> --}}
 <script>
-    function updateApartment(url,data,type) {
-            console.log(data);
-            axios.post(url, {
-                id:data,
-                typeData:type,
+    function endContract(id) {
+            // console.log(data);
+            axios.post('/rental/delete/'+id, {
+
+            endDate: document.getElementById('endDate').value,
+
             }).then(function(response) {
                 // handle success 2xx
                 console.log(response);

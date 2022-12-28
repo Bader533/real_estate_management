@@ -275,6 +275,12 @@ return [
     "lease_contract_data" => "بيانات عقد الإيجار",
     "or_add_new_tenant" => "أو قم بإضافة مستأجر جديد",
     "finance" => "المالية",
+    "evacuation" => "إخلاء",
+    "renewal" => "تجديد",
+    "all_operations" => "جميع العمليات",
+    "add_date" => "اضف التاريخ",
+    "my_profile" => "حسابى",
+
 
 
 
