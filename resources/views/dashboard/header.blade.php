@@ -82,8 +82,17 @@
                             <!--end::Menu separator-->
                             <!--begin::Menu item-->
                             <div class="menu-item px-5">
+                                @if(Auth::guard('admin')->check())
+
+                                <a href="#" class="menu-link px-5">{{__('site.my_profile')}}</a>
+
+                                @elseif(Auth::guard('owner')->check())
+
                                 <a href="{{route('owner.edit',auth('owner')->user()->id)}}"
                                     class="menu-link px-5">{{__('site.my_profile')}}</a>
+
+                                @endif
+
                             </div>
                             <!--end::Menu item-->
 

@@ -219,6 +219,7 @@ return [
     "all_operations" => "All Operations",
     "add_date" => "Add Date",
     "my_profile" => "My Profile",
+    "contracts" => "Contracts",
 
 
 

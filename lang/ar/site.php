@@ -280,6 +280,8 @@ return [
     "all_operations" => "جميع العمليات",
     "add_date" => "اضف التاريخ",
     "my_profile" => "حسابى",
+    "contracts" => "عقود الايجار",
+
 
 
 

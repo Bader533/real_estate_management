@@ -10,9 +10,9 @@
 @endif
 @endsection
 
-@section('title')
-@section('pagename')
-@section('object')
+@section('title','home')
+@section('pagename',__('site.home'))
+@section('object',__('site.home'))
 
 @section('content')
 
@@ -127,10 +127,10 @@
                                 d="M18.1 21H5.9C5.4 21 4.9 20.6 4.8 20.1L3 13H21L19.2 20.1C19.1 20.6 18.6 21 18.1 21ZM13 18V15C13 14.4 12.6 14 12 14C11.4 14 11 14.4 11 15V18C11 18.6 11.4 19 12 19C12.6 19 13 18.6 13 18ZM17 18V15C17 14.4 16.6 14 16 14C15.4 14 15 14.4 15 15V18C15 18.6 15.4 19 16 19C16.6 19 17 18.6 17 18ZM9 18V15C9 14.4 8.6 14 8 14C7.4 14 7 14.4 7 15V18C7 18.6 7.4 19 8 19C8.6 19 9 18.6 9 18Z"
                                 fill="black" />
                         </svg> --}}
-                        <p style="font-size: 20px;color:white">{{$compounds}}</p>
+                        <p style="font-size: 20px;color:white">{{$tenants}}</p>
                     </span>
                     <!--end::Svg Icon-->
-                    <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{__('site.compounds')}}</div>
+                    <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{__('site.tenants')}}</div>
                     {{-- <div class="fw-bold text-white">Lands, Houses, Ranchos, Farms</div> --}}
                 </div>
                 <!--end::Body-->
@@ -156,10 +156,10 @@
                                 d="M15 18.6C15 20.3 16.3 21.6 18 21.6C19.7 21.6 21 20.3 21 18.6V12.5C21 12.2 20.6 12 20.3 12.2L19 13.6L17.7 12.3C17.3 11.9 16.7 11.9 16.3 12.3L15 13.6V18.6Z"
                                 fill="black" />
                         </svg> --}}
-                        <p style="font-size: 20px;color:white">{{$buildings}}</p>
+                        <p style="font-size: 20px;color:white">{{$contracts}}</p>
                     </span>
                     <!--end::Svg Icon-->
-                    <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{__('site.buildings')}}</div>
+                    <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{__('site.contracts')}}</div>
                     {{-- <div class="fw-bold text-white">Flats, Shared Rooms, Duplex</div> --}}
                 </div>
                 <!--end::Body-->
@@ -182,10 +182,10 @@
                                 d="M21 20H20V16C20 15.4 19.6 15 19 15H17C16.4 15 16 15.4 16 16V20H3C2.4 20 2 20.4 2 21C2 21.6 2.4 22 3 22H21C21.6 22 22 21.6 22 21C22 20.4 21.6 20 21 20Z"
                                 fill="black" />
                         </svg> --}}
-                        <p style="font-size: 20px;color:white">{{$apartments}}</p>
+                        <p style="font-size: 20px;color:white">{{$total_amount_of_rent}}</p>
                     </span>
                     <!--end::Svg Icon-->
-                    <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{__('site.apartment')}}</div>
+                    <div class="text-white fw-bolder fs-2 mb-2 mt-5">{{__('site.total_amount_of_rent')}}</div>
                     {{-- <div class="fw-bold text-white">50% Increased for FY20</div> --}}
                 </div>
                 <!--end::Body-->

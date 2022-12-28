@@ -7,6 +7,9 @@ use App\Http\Controllers\CompoundController;
 use App\Http\Controllers\CompoundImageController;
 use App\Http\Controllers\ContractController;
 use App\Http\Controllers\Controller;
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\EstatesController;
+use App\Http\Controllers\Admin\TenantController as AdminTenantController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PropertyOwnerController;
 use App\Http\Controllers\TenantController;
@@ -28,7 +31,7 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 Route::get('register', [AuthController::class, 'showRegister'])->name('register.create');
 Route::post('register', [AuthController::class, 'register'])->name('register.store');
 
-Route::middleware('guest:owner,admin,employee')->group(function () {
+Route::middleware('guest:owner,admin')->group(function () {
     Route::get('{guard}/login', [AuthController::class, 'showLogin'])->name('dashboard.login');
     Route::post('login', [AuthController::class, 'login'])->name('login');
 });
@@ -39,6 +42,7 @@ Route::group(
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:admin,owner']
     ],
     function () {
+
         Route::middleware('auth:owner')->group(
             function () {
                 Route::get('', [Controller::class, 'homeController'])->name('page.home');
@@ -97,6 +101,32 @@ Route::group(
                 //delete images ..
                 Route::delete('compound/image/{id}', [CompoundImageController::class, 'deleteImage'])->name('compound.image.delete');
                 Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+            }
+        );
+
+        Route::middleware('auth:admin')->group(
+            function () {
+                Route::get('', [AdminController::class, 'index'])->name('page.home');
+
+                /* ************************** compound ************************** */
+                Route::get('compounds/all', [EstatesController::class, 'compoundIndex'])->name('compound.all');
+                Route::get('compounds/search', [EstatesController::class, 'compoundSearch'])->name('compound.search');
+                /* ************************** end compound ************************** */
+
+                /* ************************** building ************************** */
+                Route::get('buildings/all', [EstatesController::class, 'buildingIndex'])->name('building.all');
+                Route::get('buildings/search', [EstatesController::class, 'buildingSearch'])->name('building.search.admin');
+                /* ************************** end building ************************** */
+
+                /* ************************** apartment ************************** */
+                Route::get('apartments/all', [EstatesController::class, 'apartmentIndex'])->name('apartment.all');
+                Route::get('apartments/search', [EstatesController::class, 'apartmentSearch'])->name('apartment.search.admin');
+                /* ************************** end apartment ************************** */
+
+                /* ************************** tenant ************************** */
+                Route::get('tenants/all', [AdminTenantController::class, 'tenantIndex'])->name('tenant.all');
+                Route::get('tenants/search', [AdminTenantController::class, 'tenantSearch'])->name('tenant.search.admin');
+                /* ************************** end tenant ************************** */
             }
         );
     }

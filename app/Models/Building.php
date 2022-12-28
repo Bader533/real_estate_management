@@ -24,7 +24,7 @@ class Building extends Model
         return $this->belongsTo(Compound::class);
     }
 
-    public function apartment()
+    public function apartments()
     {
         return $this->hasMany(Apartment::class);
     }
