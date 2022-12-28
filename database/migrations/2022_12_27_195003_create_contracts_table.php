@@ -13,16 +13,18 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tenants', function (Blueprint $table) {
+        Schema::create('contracts', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('nationality');
-            $table->string('ssl');
-            $table->string('status')->nullable();
-            $table->integer('rate')->nullable();
+            $table->date('from');
+            $table->date('to');
+            $table->string('number_of_batches');
+            $table->string('total_amount_of_rent');
+            $table->string('guarantee_amount');
+            $table->integer('payment_method');
             $table->foreignId('property_owner_id')->constrained();
+            $table->foreignId('apartment_id')->constrained();
+            $table->foreignId('tenant_id')->constrained();
+            $table->integer('is_active');
             $table->timestamps();
         });
     }
@@ -34,6 +36,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tenants');
+        Schema::dropIfExists('contracts');
     }
 };

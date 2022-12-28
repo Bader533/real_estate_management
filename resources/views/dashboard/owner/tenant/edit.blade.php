@@ -28,7 +28,7 @@
             <form id="create-form">
                 <div class="card-body">
 
-                    <!--begin::compound name-->
+                    <!--begin:: name-->
                     <div class="fv-row mb-10">
 
                         <label for="name" class="fw-bold fs-6 mb-2">{{ __('site.name') }}</label>
@@ -36,9 +36,9 @@
                             placeholder="" value="{{$tenant->name}}" required />
 
                     </div>
-                    <!--end::compound name-->
+                    <!--end:: name-->
 
-                    <!--begin::compound email-->
+                    <!--begin:: email-->
                     <div class="fv-row mb-10">
 
                         <label for="email" class="fw-bold fs-6 mb-2">{{ __('site.email') }}</label>
@@ -46,9 +46,9 @@
                             placeholder="" value="{{$tenant->email}}" required />
 
                     </div>
-                    <!--end::compound email-->
+                    <!--end:: email-->
 
-                    <!--begin::compound address-->
+                    <!--begin:: phone-->
                     <div class="fv-row mb-10">
 
                         <label for="phone" class="fw-bold fs-6 mb-2">{{ __('site.phone') }}</label>
@@ -56,7 +56,29 @@
                             placeholder="" value="{{$tenant->phone}}" required />
 
                     </div>
-                    <!--end::compound address-->
+                    <!--end:: phone-->
+
+                    <!--begin:: nationality-->
+                    <div class="fv-row mb-10">
+
+                        <label for="nationality" class="fw-bold fs-6 mb-2">{{ __('site.nationality') }}</label>
+                        <input type="text" name="nationality" id="nationality"
+                            class="form-control form-control-solid mb-3 mb-lg-0" placeholder=""
+                            value="{{$tenant->nationality}}" required />
+
+                    </div>
+                    <!--end:: nationality-->
+
+                    <!--begin:: id_number-->
+                    <div class="fv-row mb-10">
+
+                        <label for="id_number" class="fw-bold fs-6 mb-2">{{ __('site.id_number') }}</label>
+                        <input type="text" name="id_number" id="id_number"
+                            class="form-control form-control-solid mb-3 mb-lg-0" placeholder="" value="{{$tenant->ssl}}"
+                            required />
+
+                    </div>
+                    <!--end:: id_number-->
 
                 </div>
                 <div class="card-footer">
@@ -87,6 +109,8 @@
                     name: document.getElementById('name').value,
                     email: document.getElementById('email').value,
                     phone: document.getElementById('phone').value,
+                    nationality: document.getElementById('nationality').value,
+                    id_number: document.getElementById('id_number').value,
                 })
                 .then(function(response) {
                     //2xx

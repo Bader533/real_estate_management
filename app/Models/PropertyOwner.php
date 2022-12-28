@@ -30,4 +30,9 @@ class PropertyOwner extends Authenticatable
     {
         return $this->hasMany(Tenant::class);
     }
+
+    public function contracts()
+    {
+        return $this->hasMany(Contract::class);
+    }
 }

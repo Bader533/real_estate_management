@@ -362,16 +362,6 @@ class BuildingController extends Controller
     }
     function importShippment(Request $request)
     {
-        // $request->validate([
-        //     'file' => 'required|mimes:xlsx,xls',
-        // ]);
-
-        // $file = $request->file('file')->path();
-        // $import = new BuildingsImport;
-        // $import->import($file);
-
-        // return redirect()->back();
-
         $validator = Validator($request->all(), [
             'file' => 'required|mimes:xlsx,xls',
         ]);

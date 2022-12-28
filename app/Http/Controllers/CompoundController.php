@@ -148,7 +148,7 @@ class CompoundController extends Controller
         $query = $request->get('search');
         if ($request->ajax()) {
             $output = "";
-            $compounds = Compound::where('name', 'like', '%' . $query . '%')
+            $compounds = Compound::where('property_owner_id ', auth('owner')->user()->id)->where('name', 'like', '%' . $query . '%')
                 ->orWhere('city', 'like', '%' . $query . '%')
                 ->orWhere('address', 'like', '%' . $query . '%')
                 ->orderBy('id', 'desc')

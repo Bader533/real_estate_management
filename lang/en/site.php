@@ -140,6 +140,8 @@ return [
     'compound_update' => 'Compound Updated Successfully',
     'compound_create' => 'Compound Created Successfully',
     'search_Compounds' => 'Search Compounds',
+    "compound_not_selected" => "The Compound Not Selected",
+    "select_compound" => "Select Compound",
 
     "buildings" => "The Buildings",
     "add_new_building" => "Add New Building",
@@ -151,6 +153,8 @@ return [
     'standalone' => 'Standalone',
     'add_building' => 'Add Building',
     'search_buildings' => 'Search Buildings',
+    "building_not_selected" => "The Building Not Selected",
+    "select_building" => "Select Building",
 
     "apartment" => "The Apartments",
     "name_of_apartment" => "Name Or Number Of Apartment ",
@@ -195,6 +199,29 @@ return [
     "total_rental_amount" => "Total Rental Amount",
     "guarantee_amount" => "Guarantee Amount",
     "number_of_batches" => "The Number Of Batches",
+    "select" => "Select",
+    "nationality" => "Nationality",
+    "id_number" => "ID Number",
+    "from" => "Start Date",
+    "to" => "End Date",
+    "total_amount_of_rent" => "The Total Amount Of Rent",
+    "guarantee_amount" => "Guarantee Amount",
+    "payment_method" => "Payment method",
+    "payment_at_the_beginning_of_the_contract" => "Payment at the beginning of the contract",
+    "pay_with_rent_payments" => "Pay with rent payments",
+    "tenant_data" => "Tenant data",
+    "lease_contract_data" => "Lease contract data",
+    "or_add_new_tenant" => "Or Add New Tenant",
+    "finance" => "Finance",
+    "evacuation" => "Eviction",
+    "renewal" => "Renewal",
+    'designation' => 'Designation',
+    "all_operations" => "All Operations",
+    "add_date" => "Add Date",
+    "my_profile" => "My Profile",
+    "contracts" => "Contracts",
+
+
 
 
 

@@ -193,6 +193,9 @@ return [
     'compound_create' => ' تم اضافة مجمع جديد',
     'search_Compounds' => 'البحث فى المجمعات',
     'add_compound' => 'اضافة مجمع',
+    "compound_not_selected" => "لم يتم تحديد مجمع",
+    "select_compound" => "اختر مجمع",
+
 
 
     "buildings" => "العمارات",
@@ -206,6 +209,8 @@ return [
 
     'add_building' => 'اضافة عمارة',
     'search_buildings' => 'البحث فى العمارات',
+    "building_not_selected" => "لم يتم تحديد العمارة",
+    "select_building" => "اختر عمارة",
 
     "apartment" => "الوحدات السكنية",
     "name_of_apartment" => "اسم او رقم الوحدة",
@@ -256,6 +261,33 @@ return [
     "total_rental_amount" => "إجمالي مبلغ الإيجار",
     "guarantee_amount" => "مبلغ الضمان",
     "number_of_batches" => "عدد الدفعات",
+    "select" => "اختر",
+    "nationality" => "الجنسية",
+    "id_number" => "رقم الهوية",
+    "from" => "تاريخ البداية",
+    "to" => "تاريخ النهاية",
+    "total_amount_of_rent" => "اجمالى مبلغ الايجار",
+    "guarantee_amount" => "مبلغ الضمان",
+    "payment_method" => "طريقة الدفع",
+    "payment_at_the_beginning_of_the_contract" => "الدفع في بداية العقد",
+    "pay_with_rent_payments" => "الدفع مع دفعات الإيجار",
+    "tenant_data" => "بيانات المستأجر",
+    "lease_contract_data" => "بيانات عقد الإيجار",
+    "or_add_new_tenant" => "أو قم بإضافة مستأجر جديد",
+    "finance" => "المالية",
+    "evacuation" => "إخلاء",
+    "renewal" => "تجديد",
+    "all_operations" => "جميع العمليات",
+    "add_date" => "اضف التاريخ",
+    "my_profile" => "حسابى",
+    "contracts" => "عقود الايجار",
+
+
+
+
+
+
+
 
 
     'ar' => [

@@ -137,6 +137,53 @@ function addApartment(id) {
     }
 }
 
+//add addRental
+function addRental() {
+    let formData = new FormData();
+    formData.append("apartment_id" , document.getElementById("apartment_id").value);
+    formData.append("from", document.getElementById("from").value);
+    formData.append("to", document.getElementById("to").value);
+    formData.append("number_of_batches", document.getElementById("number_of_batches").value);
+    formData.append("total_amount_of_rent", document.getElementById("total_amount_of_rent").value);
+    formData.append("guarantee_amount", document.getElementById("guarantee_amount").value);
+    formData.append("payment_method", document.getElementById("payment_method").value);
+    formData.append("tenant_id", document.getElementById("tenant_id").value);
+    formData.append("name", document.getElementById("name").value);
+    formData.append("nationality", document.getElementById("nationality").value);
+    formData.append("ssl", document.getElementById("ssl").value);
+    formData.append("phone", document.getElementById("phone").value);
+    formData.append("email", document.getElementById("email").value);
+
+    for (const image of images) {
+        formData.append("images[]", image);
+    }
+    // const button = document.getElementById("button");
+    // console.log(button.innerHTML);
+
+    formData.append("_method", "POST");
+    store("/rentals", formData, "/apartment");
+
+}
+
+//edit Rental
+function editRental(id) {
+    let formData = new FormData();
+    formData.append("from", document.getElementById("from").value);
+    formData.append("to", document.getElementById("to").value);
+    formData.append("number_of_batches", document.getElementById("number_of_batches").value);
+    formData.append("total_amount_of_rent", document.getElementById("total_amount_of_rent").value);
+    formData.append("guarantee_amount", document.getElementById("guarantee_amount").value);
+    formData.append("payment_method", document.getElementById("payment_method").value);
+
+    for (const image of images) {
+        formData.append("images[]", image);
+    }
+
+    formData.append("_method", "PUT");
+    updatefromdata("/rental/"+ id, formData, "/apartment");
+
+}
+
 function importFile(fileElement,url,redirectUrl) {
     let formData = new FormData();
 

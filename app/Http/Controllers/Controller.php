@@ -22,10 +22,22 @@ class Controller extends BaseController
         $compounds = auth('owner')->user()->compounds()->count();
         $buildings = auth('owner')->user()->buildings()->count();
         $apartments = auth('owner')->user()->apartments()->count();
-        return view('dashboard.home_page', [
+        $tenants = auth('owner')->user()->tenants()->count();
+        $contracts = auth('owner')->user()->contracts()->count();
+        $allContracts = auth('owner')->user()->contracts()->get();
+
+        $total_amount_of_rent = 0;
+        foreach ($allContracts as $oneContract) {
+            $total_amount_of_rent = $total_amount_of_rent + $oneContract->total_amount_of_rent;
+        }
+
+        return view('dashboard.owner.home_page', [
             'compounds' => $compounds,
             'buildings' => $buildings,
             'apartments' => $apartments,
+            'tenants' => $tenants,
+            'contracts' => $contracts,
+            'total_amount_of_rent' => $total_amount_of_rent,
         ]);
     }
 }

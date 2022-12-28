@@ -12,6 +12,8 @@
         <!--end::Logo-->
     </div>
     <!--end::Brand-->
+
+    @if(Auth::guard('admin')->check())
     <!--begin::Aside menu-->
     <div class="aside-menu flex-column-fluid" id="kt_aside_menu">
         <!--begin::Aside Menu-->
@@ -27,7 +29,67 @@
                         <span class="menu-icon me-0">
                             <i class="bi bi-house fs-2"></i>
                         </span>
-                        <span class="menu-title">Home</span>
+                        <span class="menu-title">{{__("site.home")}}</span>
+                    </a>
+                </div>
+
+                <div class="menu-item py-2">
+                    <a class="menu-link menu-center" href="{{route('compound.all')}}" data-bs-trigger="hover"
+                        data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-shield-check fs-2"></i>
+                        </span>
+                        <span class="menu-title">{{__("site.estates")}}</span>
+                    </a>
+                </div>
+
+                <div class="menu-item py-2">
+                    <a class="menu-link menu-center" href="{{route('tenant.all')}}" data-bs-trigger="hover"
+                        data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-people fs-2"></i>
+                        </span>
+                        <span class="menu-title">{{__("site.tenants")}}</span>
+                    </a>
+                </div>
+
+                <div class="menu-item py-2">
+                    <a class="menu-link menu-center" href="{{route('finance.index')}}" data-bs-trigger="hover"
+                        data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-cash-coin"></i>
+                        </span>
+                        <span class="menu-title">{{__("site.finance")}}</span>
+                    </a>
+                </div>
+
+            </div>
+            <!--end::Menu-->
+        </div>
+        <!--end::Aside Menu-->
+    </div>
+    <!--end::Aside menu-->
+
+
+    @elseif(Auth::guard('owner')->check())
+
+
+    <!--begin::Aside menu-->
+    <div class="aside-menu flex-column-fluid" id="kt_aside_menu">
+        <!--begin::Aside Menu-->
+        <div class="hover-scroll-overlay-y my-2 my-lg-5 pe-lg-n1" id="kt_aside_menu_wrapper" data-kt-scroll="true"
+            data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_aside_logo, #kt_aside_footer"
+            data-kt-scroll-wrappers="#kt_aside, #kt_aside_menu" data-kt-scroll-offset="5px">
+            <!--begin::Menu-->
+            <div class="menu menu-column menu-title-gray-700 menu-state-title-primary menu-state-icon-primary menu-state-bullet-primary menu-arrow-gray-500 fw-bold"
+                id="#kt_aside_menu" data-kt-menu="true">
+                <div class="menu-item py-2">
+                    <a class="menu-link active menu-center" href="{{route('page.home')}}" data-bs-trigger="hover"
+                        data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-house fs-2"></i>
+                        </span>
+                        <span class="menu-title">{{__("site.home")}}</span>
                     </a>
                 </div>
 
@@ -48,6 +110,16 @@
                             <i class="bi bi-people fs-2"></i>
                         </span>
                         <span class="menu-title">{{__("site.tenants")}}</span>
+                    </a>
+                </div>
+
+                <div class="menu-item py-2">
+                    <a class="menu-link menu-center" href="{{route('finance.index')}}" data-bs-trigger="hover"
+                        data-bs-dismiss="click" data-bs-placement="right">
+                        <span class="menu-icon me-0">
+                            <i class="bi bi-cash-coin"></i>
+                        </span>
+                        <span class="menu-title">{{__("site.finance")}}</span>
                     </a>
                 </div>
 
@@ -93,5 +165,7 @@
         <!--end::Aside Menu-->
     </div>
     <!--end::Aside menu-->
+
+    @endif
 </div>
 <!--end::Aside-->
