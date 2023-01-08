@@ -29,8 +29,8 @@ class Apartment extends Model
         return $this->belongsTo(Building::class);
     }
 
-    public function contracts()
+    public function contract()
     {
-        return $this->hasMany(Contract::class);
+        return $this->hasOne(Contract::class);
     }
 }

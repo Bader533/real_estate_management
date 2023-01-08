@@ -116,15 +116,12 @@
                     <div id="air_conditioning" class="fv-row mb-10">
                         <label for="space" class="fw-bold fs-6 mb-2">{{ __('site.type_of_air_conditioning') }}</label>
                         <div id="div_radio1">
-                            <input type="radio" name="conditioning" class="input_radio" value="window" id="window">
-                            <label for="window" class="radio_label" @if ($apartment->ac_type ==
-                                'window') checked
-                                @endif>{{ __('site.window') }}</label>
+                            <input type="radio" name="conditioning" class="input_radio" value="window" id="window"
+                                @if($apartment->ac_type =='window') checked @endif>
+                            <label for="window" class="radio_label">{{ __('site.window') }}</label>
 
                             <input type="radio" name="conditioning" class="input_radio" value="split" id="split"
-                                @if($apartment->ac_type ==
-                            'split') checked
-                            @endif>
+                                @if($apartment->ac_type == 'split') checked @endif>
                             <label for="split" class="radio_label">{{ __('site.split') }}</label>
 
                             <input type="radio" name="conditioning" class="input_radio" value="central" id="central"
@@ -343,6 +340,14 @@
                     </div>
                     {{-- end building images --}}
                     <div class="container">
+                        @if (count($apartment->images) != 0)
+                        @foreach ($apartment->images as $key => $image)
+                        <div class="image" id="imageDiv">
+                            <img src="{{ asset($image->url) }}" alt="image">
+                            <span onclick="performDelete('/compound/image/','{{ $image->id }}')">&times;</span>
+                        </div>
+                        @endforeach
+                        @endif
                     </div>
 
                 </div>

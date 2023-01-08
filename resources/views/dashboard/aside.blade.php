@@ -6,9 +6,21 @@
     <!--begin::Brand-->
     <div class="aside-logo py-8" id="kt_aside_logo">
         <!--begin::Logo-->
+
+        @if (Auth::guard('admin')->check())
+
         <a href="{{route('page.home')}}" class="d-flex align-items-center">
             <img alt="Logo" src="{{asset('assets/media/logos/logo-demo-6.svg')}}" class="h-45px logo" />
         </a>
+
+        @elseif(Auth::guard('owner')->check())
+
+        <a href="{{route('page.home')}}" class="d-flex align-items-center">
+            <img alt="Logo" src="{{asset('assets/media/logos/logo-demo-6.svg')}}" class="h-45px logo" />
+        </a>
+
+        @endif
+
         <!--end::Logo-->
     </div>
     <!--end::Brand-->
@@ -54,12 +66,12 @@
                 </div>
 
                 <div class="menu-item py-2">
-                    <a class="menu-link menu-center" href="{{route('finance.index')}}" data-bs-trigger="hover"
+                    <a class="menu-link menu-center" href="{{route('owner.all')}}" data-bs-trigger="hover"
                         data-bs-dismiss="click" data-bs-placement="right">
                         <span class="menu-icon me-0">
-                            <i class="bi bi-cash-coin"></i>
+                            <i class="bi bi-people fs-2"></i>
                         </span>
-                        <span class="menu-title">{{__("site.finance")}}</span>
+                        <span class="menu-title">{{__("site.owners")}}</span>
                     </a>
                 </div>
 

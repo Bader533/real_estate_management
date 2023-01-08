@@ -17,7 +17,12 @@ class TenantFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'name' => fake()->name(),
+            'email' => fake()->email(),
+            'phone' => fake()->phoneNumber(),
+            'nationality' => fake()->city(),
+            'ssl' => rand(10, 1000),
+            'property_owner_id' => 1,
         ];
     }
 }

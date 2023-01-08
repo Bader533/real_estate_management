@@ -1,0 +1,121 @@
+.login-page{
+    background-image: linear-gradient(to right, #fff 50% , #BCCCFF 50%);
+}
+.login-page .login-form{
+    width: 50%;
+    max-height: 100vh;
+    padding: 20px;
+}
+.login-page .login-form form{
+    /* height: calc(100% - 0px); */
+    margin-top: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.login-page .login-form  form .input-form{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.login-page .login-form  form .input-form input{
+    border: 1px solid #ddd;
+    padding: 20px;
+    width: 80%;
+    outline: none;
+}
+.login-page .login-form  form .input-form svg{
+    position: relative;
+    top: -60px;
+    right: -105px;
+}
+.login-page .login-form  form p {
+    text-align: end;
+    width: 80%;
+    font-weight: bold;
+}
+.login-page .login-form form button{
+    /* width: 80%;
+    outline: none;
+    border: none;
+    color: #fff;
+    background-color: #E76F3C;
+    padding: 20px;
+    font-weight: bold; */
+    width: 100%;
+    background-color: #E76F3C;
+    color: white;
+    border: 0;
+    padding: 10px 0px;
+    border-radius: 5px;
+}
+.login-page .login-form form .form-icon{
+    position: absolute;
+    right: 61%;
+    top: 57%;
+}
+.login-page .two{
+    width: 50%;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #BDCCFF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.login-page .two p{
+    margin-left: 60px;
+    color: #fff;
+    font-size: 32px;
+    text-align: center;
+}
+.login-page .two img{
+    /* background-color: #E76F3C; */
+    width: 120%;
+    margin-left: 102px;
+    /* height: 90%; */
+}
+.register{
+    text-decoration: none;
+}
+.form-control_verification {
+    display: block;
+    height: 50px;
+    margin-right: 0.5rem;
+    text-align: center;
+    font-size: 1.25rem;
+    min-width: 0;
+
+    /* &:last-child {
+        margin-right: 0;
+    } */
+}
+
+@media screen and (max-width:991px){
+    .login-page{
+        background-image: none;
+    }
+    .login-page .login-form {
+        min-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .login-page .login-form .input-form input{
+        width: 130% !important;
+    }
+    .login-page .login-form form {
+        margin-top: 30px;
+    }
+    .login-page .login-form form p , .login-page .login-form form button{
+        /* width: 130%; */
+        border-radius: 5px;
+    }
+    .login-page .two{
+        min-width: 100%;
+    }
+    .login-page .two p{
+        margin-left: 35px;
+    }
+}

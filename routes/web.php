@@ -9,10 +9,12 @@ use App\Http\Controllers\ContractController;
 use App\Http\Controllers\Controller;
 use App\Http\Controllers\Admin\AdminController;
 use App\Http\Controllers\Admin\EstatesController;
+use App\Http\Controllers\Admin\OwnerController;
 use App\Http\Controllers\Admin\TenantController as AdminTenantController;
 use App\Http\Controllers\FinanceController;
 use App\Http\Controllers\PropertyOwnerController;
 use App\Http\Controllers\TenantController;
+use App\Http\Controllers\TenantInfoController;
 use App\Models\PropertyOwner;
 use Illuminate\Support\Facades\Route;
 use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
@@ -28,24 +30,34 @@ use Mcamara\LaravelLocalization\Facades\LaravelLocalization;
 |
 */
 
+Route::fallback(function () {
+    return 'Hm, why did you land here somehow?';
+});
+Route::view('/', 'landingpage');
 Route::get('register', [AuthController::class, 'showRegister'])->name('register.create');
 Route::post('register', [AuthController::class, 'register'])->name('register.store');
+Route::get('verification/{id}', [AuthController::class, 'showVerificationCode'])->name('verify.account');
+Route::post('verification/{id}', [AuthController::class, 'verificationCode']);
 
 Route::middleware('guest:owner,admin')->group(function () {
     Route::get('{guard}/login', [AuthController::class, 'showLogin'])->name('dashboard.login');
     Route::post('login', [AuthController::class, 'login'])->name('login');
 });
 
+
 Route::group(
     [
         'prefix' => LaravelLocalization::setLocale(),
         'middleware' => ['localeSessionRedirect', 'localizationRedirect', 'localeViewPath', 'auth:admin,owner']
     ],
+
     function () {
+
+        Route::get('/dashboard', [Controller::class, 'homeController'])->name('page.home')->middleware('auth:owner,admin');
 
         Route::middleware('auth:owner')->group(
             function () {
-                Route::get('', [Controller::class, 'homeController'])->name('page.home');
+
 
                 /* ************************** owner ************************** */
                 Route::resource('owner', PropertyOwnerController::class);
@@ -68,6 +80,7 @@ Route::group(
 
                 /* ************************** apartment ************************** */
                 Route::resource('apartment', ApartmentController::class);
+                Route::get('apartment/create', [ApartmentController::class, 'create'])->name('apartment.create.type');
                 Route::delete('apartment/image/{id}', [ApartmentController::class, 'deleteImage'])->name('apartment.image.delete');
                 Route::get('search/apartment', [ApartmentController::class, 'search'])->name('apartment.search');
                 Route::get('import/apartment', [ApartmentController::class, 'viewImport'])->name('apartment.import');
@@ -81,8 +94,14 @@ Route::group(
                 Route::get('search/tenant', [TenantController::class, 'search'])->name('tenant.search');
                 Route::get('import/tenant', [TenantController::class, 'viewImport'])->name('tenant.import');
                 Route::post('import/tenant', [TenantController::class, 'importTenants'])->name('tenant.import.store');
-                Route::view('advanced/search', 'dashboard.owner.tenant.advanced_search')->name('searcch');
+                Route::get('advanced/search', [TenantController::class, 'advancedSearch'])->name('advanced.search');
+                //
+                Route::view('comm/tenant', 'dashboard.owner.apartment.commercial.create');
                 /* ************************** end tenant ************************** */
+
+                /* ************************** tenant_info ************************** */
+                Route::resource('tenant-info', TenantInfoController::class);
+                /* ************************** end tenant_info ************************** */
 
                 /* ************************** rentals ************************** */
                 Route::resource('rental', ContractController::class);
@@ -106,7 +125,6 @@ Route::group(
 
         Route::middleware('auth:admin')->group(
             function () {
-                Route::get('', [AdminController::class, 'index'])->name('page.home');
 
                 /* ************************** compound ************************** */
                 Route::get('compounds/all', [EstatesController::class, 'compoundIndex'])->name('compound.all');
@@ -127,6 +145,11 @@ Route::group(
                 Route::get('tenants/all', [AdminTenantController::class, 'tenantIndex'])->name('tenant.all');
                 Route::get('tenants/search', [AdminTenantController::class, 'tenantSearch'])->name('tenant.search.admin');
                 /* ************************** end tenant ************************** */
+
+                /* ************************** owner ************************** */
+                Route::get('owners/all', [OwnerController::class, 'ownerIndex'])->name('owner.all');
+                Route::get('owners/search', [OwnerController::class, 'ownerSearch'])->name('owner.search.admin');
+                /* ************************** end owner ************************** */
             }
         );
     }

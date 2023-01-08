@@ -21,7 +21,7 @@
     <div class="row g-5 g-xl-8">
         <div class="col-xl-4">
             <!--begin::Statistics Widget 5-->
-            <a href="#" class="card bg-danger hoverable card-xl-stretch mb-xl-8">
+            <a href="{{route('compound.index')}}" class="card bg-danger hoverable card-xl-stretch mb-xl-8">
                 <!--begin::Body-->
                 <div class="card-body">
                     <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->
@@ -50,7 +50,7 @@
         </div>
         <div class="col-xl-4">
             <!--begin::Statistics Widget 5-->
-            <a href="#" class="card bg-primary hoverable card-xl-stretch mb-xl-8">
+            <a href="{{route('building.index')}}" class="card bg-primary hoverable card-xl-stretch mb-xl-8">
                 <!--begin::Body-->
                 <div class="card-body">
                     <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm008.svg-->
@@ -79,7 +79,7 @@
         </div>
         <div class="col-xl-4">
             <!--begin::Statistics Widget 5-->
-            <a href="#" class="card bg-success hoverable card-xl-stretch mb-5 mb-xl-8">
+            <a href="{{route('apartment.index')}}" class="card bg-success hoverable card-xl-stretch mb-5 mb-xl-8">
                 <!--begin::Body-->
                 <div class="card-body">
                     <!--begin::Svg Icon | path: icons/duotune/graphs/gra005.svg-->
@@ -110,7 +110,7 @@
     <div class="row g-5 g-xl-8">
         <div class="col-xl-4">
             <!--begin::Statistics Widget 5-->
-            <a href="#" class="card bg-danger hoverable card-xl-stretch mb-xl-8">
+            <a href="{{route('tenant.index')}}" class="card bg-danger hoverable card-xl-stretch mb-xl-8">
                 <!--begin::Body-->
                 <div class="card-body">
                     <!--begin::Svg Icon | path: icons/duotune/ecommerce/ecm002.svg-->

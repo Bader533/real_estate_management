@@ -17,7 +17,7 @@ class FinanceController extends Controller
     {
         $contracts = auth('owner')->user()->contracts()
             ->where('from', '>=', Carbon::parse($request->input('from')))
-            ->where('to', '<=', Carbon::parse($request->input('to')))->get();
+            ->where('to', '<=', Carbon::parse($request->input('to')))->paginate(10);
         return view('dashboard.owner.finance.index', ['contracts' => $contracts]);
     }
 
@@ -26,12 +26,12 @@ class FinanceController extends Controller
         $query = $request->get('search');
         if ($request->ajax()) {
             $output = "";
-            $contracts = Contract::where('number_of_batches', 'like', '%' . $query . '%')
+            $contracts = Contract::where('property_owner_id', auth('owner')->user()->id)->where('number_of_batches', 'like', '%' . $query . '%')
                 ->orWhere('total_amount_of_rent', 'like', '%' . $query . '%')
                 ->orWhere('guarantee_amount', 'like', '%' . $query . '%')
                 ->orWhere('payment_method', 'like', '%' . $query . '%')
                 ->orderBy('id', 'desc')
-                ->get();
+                ->paginate(10);
 
             $total_row = $contracts->count();
 

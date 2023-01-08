@@ -20,6 +20,7 @@ class AdminSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@app.com',
             'phone' => '999999999',
+            'verified' => true,
             'password' => Hash::make(12345),
         ]);
     }

@@ -281,6 +281,23 @@ return [
     "add_date" => "اضف التاريخ",
     "my_profile" => "حسابى",
     "contracts" => "عقود الايجار",
+    "owners" => "الملاك",
+    "owner_info" => "بيانات الملاك",
+    "no_contracts" => "لا يوجد عقود ايجار",
+    "no_rating" => "لا يوجد تقييم للمستاجر",
+
+    "payment" => "دفع الإيجار الشهري",
+    "cleanliness" => "النظافة",
+    "attention_at_home" => "الاهتمام في المنزل",
+    "annoyance" => "الازعاج",
+
+    "commercial_station" => "محطة تجارية",
+    "storehouse" => "مستودع",
+    "office" => "مكتب",
+    "showroom" => "معرض",
+    "residential" => "سكنى",
+    "commercial" => "تجارى",
+
 
 
 

@@ -44,9 +44,9 @@ class CompoundController extends Controller
     public function store(Request $request)
     {
         $validator = Validator($request->all(), [
-            'name' => 'required | string | max:15',
-            'city' => 'required | string | max:15',
-            'address' => 'required | string | max:30',
+            'name' => 'required | string | max:100',
+            'city' => 'required | string | max:200',
+            'address' => 'required | string | max:300',
             'images' => 'required | array',
         ]);
         if (!$validator->fails()) {
@@ -106,9 +106,9 @@ class CompoundController extends Controller
     public function update(Request $request, Compound $compound)
     {
         $validator = Validator($request->all(), [
-            'name' => 'required |string | max:15',
-            'city' => 'required |string | max:15',
-            'address' => 'required |string | max:30',
+            'name' => 'required |string | max:100',
+            'city' => 'required |string | max:100',
+            'address' => 'required |string | max:300',
         ]);
         if (!$validator->fails()) {
             $compound->name = $request->input('name');
@@ -148,7 +148,7 @@ class CompoundController extends Controller
         $query = $request->get('search');
         if ($request->ajax()) {
             $output = "";
-            $compounds = Compound::where('property_owner_id ', auth('owner')->user()->id)->where('name', 'like', '%' . $query . '%')
+            $compounds = Compound::where('property_owner_id', auth('owner')->user()->id)->where('name', 'like', '%' . $query . '%')
                 ->orWhere('city', 'like', '%' . $query . '%')
                 ->orWhere('address', 'like', '%' . $query . '%')
                 ->orderBy('id', 'desc')
@@ -157,13 +157,12 @@ class CompoundController extends Controller
             $total_row = $compounds->count();
 
             if ($total_row > 0) {
-
                 foreach ($compounds as $compound) {
                     $output .= '<div class="col" id="div_content" style=" padding: 0;">' .
                         ' <div class="card mb-3" id="div_card" style="">' .
                         ' <div class="row g-0">' .
                         ' <div class="col-md-4">' .
-                        '<img src="https://via.placeholder.com/200" style="height: 100%;" class="img-fluid rounded-start" alt="...">' .
+                        '<img src="' . asset($compound->images[0]->url ?? 'https://via.placeholder.com/200') . '" style="height: 100%;" class="img-fluid rounded-start" alt="...">' .
                         '</div>' .
                         '<div class="col-md-8">' .
                         '<div class="card-body">' .
@@ -202,20 +201,19 @@ class CompoundController extends Controller
                                                         <path
                                                             d="M88 104C88 95.16 95.16 88 104 88H152C160.8 88 168 95.16 168 104V152C168 160.8 160.8 168 152 168H104C95.16 168 88 160.8 88 152V104zM280 88C288.8 88 296 95.16 296 104V152C296 160.8 288.8 168 280 168H232C223.2 168 216 160.8 216 152V104C216 95.16 223.2 88 232 88H280zM88 232C88 223.2 95.16 216 104 216H152C160.8 216 168 223.2 168 232V280C168 288.8 160.8 296 152 296H104C95.16 296 88 288.8 88 280V232zM280 216C288.8 216 296 223.2 296 232V280C296 288.8 288.8 296 280 296H232C223.2 296 216 288.8 216 280V232C216 223.2 223.2 216 232 216H280zM0 64C0 28.65 28.65 0 64 0H320C355.3 0 384 28.65 384 64V448C384 483.3 355.3 512 320 512H64C28.65 512 0 483.3 0 448V64zM48 64V448C48 456.8 55.16 464 64 464H144V400C144 373.5 165.5 352 192 352C218.5 352 240 373.5 240 400V464H320C328.8 464 336 456.8 336 448V64C336 55.16 328.8 48 320 48H64C55.16 48 48 55.16 48 64z" />
                                                     </svg>
-                                                    0
+                                                    ' . $compound->apartments->count() . '
                                                 </p>
                                             </li>
                                         </ul>' . '</div>' . '</div>' . '</div>' . '</div>' . '</div>';
                 }
             } else {
-                $output = '<tr><td align="center" colspan="4">No Data Found</td></tr>';
+                $output = '<p style="margin-left:auto;margin-right:auto;font-size:18px;">No Data Found</p>';
             }
-            $data = array(
-                'table_data'  => $output,
-                'total_data'  => $total_row
-            );
-
-            echo json_encode($data);
+            // $data = array(
+            //     'table_data'  => $output,
+            //     'total_data'  => $total_row
+            // );
+            return response($output);
         }
     }
 

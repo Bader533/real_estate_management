@@ -15,9 +15,9 @@ return new class extends Migration
     {
         Schema::create('compounds', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('city');
-            $table->string('address');
+            $table->string('name', 200);
+            $table->string('city', 300);
+            $table->string('address', 500);
             $table->foreignId('property_owner_id')->constrained();
             $table->timestamps();
         });

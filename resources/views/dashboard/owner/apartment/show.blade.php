@@ -69,7 +69,7 @@
                     </div>
                     <div class="modal-body py-10 px-lg-17">
 
-                        <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll" data-kt-scroll="true"
+                        <div class="scroll-y me-n7 pe-7" id="kt_modal_add_customer_scroll"
                             data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto"
                             data-kt-scroll-dependencies="#kt_modal_add_customer_header"
                             data-kt-scroll-wrappers="#kt_modal_add_customer_scroll" data-kt-scroll-offset="300px">
@@ -101,7 +101,7 @@
                         <!--end::Button-->
                         <!--begin::Button-->
                         <button type="button"
-                            onclick="updateApartment('/update/apartment/details/{{$apartment->id}}',document.getElementById('building_id').value,'building')"
+                            onclick="updateApartment('{{$apartment->id}}',document.getElementById('building_id').value,'building')"
                             id="kt_modal_add_customer_submit" class="btn btn-primary">
                             <span class="indicator-label">Submit</span>
                             <span class="indicator-progress">Please wait...
@@ -179,7 +179,7 @@
                         <!--end::Button-->
                         <!--begin::Button-->
                         <button type="button"
-                            onclick="updateApartment('/update/apartment/details/{{$apartment->id}}',document.getElementById('compound_id').value,'compound')"
+                            onclick="updateApartment('{{$apartment->id}}',document.getElementById('compound_id').value,'compound')"
                             id="kt_modal_add_compound_submit" class="btn btn-primary">
                             <span class="indicator-label">Submit</span>
                             <span class="indicator-progress">Please wait...
@@ -682,8 +682,6 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-{{-- <script src="{{ asset('assets/js/app.js') }}"></script>--}}
-{{-- <script src="{{ asset('assets/js/crud.js') }}"></script> --}}
 <script>
     function endContract(id) {
             // console.log(data);
@@ -701,6 +699,25 @@
                 console.log(error);
                 // toastr.error(error.response.data.message)
             });
-        }
+    }
+
+    function updateApartment(id,data,typeData) {
+            // console.log(data);
+            axios.post('/update/apartment/details/'+id, {
+
+                data_id: data,
+                data_type: typeData,
+
+            }).then(function(response) {
+            // 2xx
+            console.log(response);
+            window.location.reload();
+            toastr.success(response.data.message);
+
+            }).catch(function(error) {
+            // 4xx - 5xx
+            console.log(error);
+            });
+    }
 </script>
 @endsection

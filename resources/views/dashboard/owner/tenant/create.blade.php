@@ -100,8 +100,6 @@
 @section('js')
 <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
 <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-{{-- <script src="{{ asset('assets/js/app.js') }}"></script> --}}
-{{-- <script src="{{ asset('assets/js/crud.js') }}"></script> --}}
 <script>
     function addTenant() {
             axios.post('/tenant', {
@@ -123,6 +121,6 @@
 
                 });
 
-        }
+    }
 </script>
 @endsection

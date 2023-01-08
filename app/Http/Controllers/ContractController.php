@@ -48,29 +48,11 @@ class ContractController extends Controller
             'total_amount_of_rent' => 'required',
             'guarantee_amount' => 'required',
             'payment_method' => 'required',
-            // 'tenant_id' => 'required ',
         ]);
         if ($request->input('tenant_id') == null) {
-            $validatorTenant = Validator($request->all(), [
-                'name' => 'required ',
-                'nationality' => 'required ',
-                'ssl' => 'required ',
-                'phone' => 'required',
-                'email' => 'required',
-            ]);
-            if (!$validatorTenant->fails()) {
-                $tenant = new Tenant();
-                $tenant->name = $request->input('name');
-                $tenant->nationality = $request->input('nationality');
-                $tenant->ssl = $request->input('ssl');
-                $tenant->phone = $request->input('phone');
-                $tenant->email = $request->input('email');
-                $tenant->property_owner_id = auth('owner')->user()->id;
-                $isTenantSaved = $tenant->save();
-            } else {
-                return response()->json(['message' => $validatorTenant->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
-            }
+            $tenant_id = $this->newTenant($request);
         }
+
         if (!$validator->fails()) {
             $contract = new Contract();
             $contract->from = $request->input('from');
@@ -82,8 +64,9 @@ class ContractController extends Controller
             $contract->property_owner_id = auth('owner')->user()->id;
             $contract->apartment_id = $request->input('apartment_id');
             $contract->is_active = 1;
+
             if ($request->input('tenant_id') == null) {
-                $contract->tenant_id = $tenant->id;
+                $contract->tenant_id = $tenant_id;
             } else {
                 $contract->tenant_id = $request->input('tenant_id');
             }
@@ -176,7 +159,6 @@ class ContractController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-        // dd($request->endDate);
         $contract = auth('owner')->user()->contracts()->where('id', $id)->where('is_active', 1)->first();
 
         $contract->to = $request->input('endDate');
@@ -188,5 +170,30 @@ class ContractController extends Controller
             ],
             $isDeleled ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
         );
+    }
+
+    // add new tenant in create contract
+    public function newTenant($request)
+    {
+        $validatorTenant = Validator($request->all(), [
+            'name' => 'required ',
+            'nationality' => 'required ',
+            'ssl' => 'required ',
+            'phone' => 'required',
+            'email' => 'required',
+        ]);
+        if (!$validatorTenant->fails()) {
+            $tenant = new Tenant();
+            $tenant->name = $request->input('name');
+            $tenant->nationality = $request->input('nationality');
+            $tenant->ssl = $request->input('ssl');
+            $tenant->phone = $request->input('phone');
+            $tenant->email = $request->input('email');
+            $tenant->property_owner_id = auth('owner')->user()->id;
+            $isTenantSaved = $tenant->save();
+            return $tenant->id;
+        } else {
+            return response()->json(['message' => $validatorTenant->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
+        }
     }
 }
