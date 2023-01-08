@@ -145,7 +145,7 @@
                             <!--begin::Table head-->
                             <thead>
                                 <!--begin::Table row-->
-                                <tr class="text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
                                     <th class="min-w-125px"> {{__('site.one_tenant')}}</th>
                                     <th class="min-w-125px">{{__('site.number_of_batches')}}</th>
                                     <th class="min-w-125px">{{__('site.total_amount_of_rent')}}</th>
@@ -198,7 +198,9 @@
                 <div class="row">
                     <div class="col-sm">
                         <div style="float: right">
-                            {{-- {{ $contracts->links('pagination::bootstrap-4') }} --}}
+                            @isset($contracts)
+                            {{ $contracts->links('pagination::bootstrap-4') }}
+                            @endisset
                         </div>
                     </div>
                 </div>

@@ -220,6 +220,25 @@ return [
     "add_date" => "Add Date",
     "my_profile" => "My Profile",
     "contracts" => "Contracts",
+    "owners" => "Owners",
+    "owner_info" => "Owner Information",
+    "no_contracts" => "No Contracts",
+    "no_rating" => "No Rating For Tenant",
+
+    "payment" => "Pay the monthly rent",
+    "cleanliness" => "Cleanliness",
+    "attention_at_home" => "Attention at home",
+    "annoyance" => "Annoyance",
+
+    "commercial_station" => "Commercial Station",
+    "storehouse" => "Storehouse",
+    "office" => "Office",
+    "showroom" => "Show Room",
+    "residential" => "Residential",
+    "commercial" => "Commercial",
+
+
+
 
 
 

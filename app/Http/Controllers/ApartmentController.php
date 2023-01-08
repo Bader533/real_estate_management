@@ -33,9 +33,13 @@ class ApartmentController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        return view('dashboard.owner.apartment.create');
+        if ($request->input('apartment-type') == 'residential') {
+            return view('dashboard.owner.apartment.create');
+        } else {
+            return view('dashboard.owner.apartment.commercial.create');
+        }
     }
 
     /**
@@ -59,11 +63,12 @@ class ApartmentController extends Controller
             'bathroom' => 'required_if:kind,apartment,villa ',
             'councils' => 'required_if:kind,apartment,villa ',
             'lounges' => 'required_if:kind,apartment,villa  ',
-            'furnishing_condition' => 'required_if:kind,apartment,villa | in:yes,no ',
-            'parking' => 'required_if:kind,apartment,villa | in:yes,no ',
-            'kitchen' => 'required_if:kind,apartment,villa | in:open,closed ',
-            'electricity_meter_number' => 'required_if:kind,apartment,villa | max:20 ',
-            'water_meter_number' => 'required_if:kind,apartment,villa | max:20  ',
+            'furnishing_condition' => 'required_if:kind,apartment,villa',
+            'parking' => 'required_if:kind,apartment,villa',
+            'kitchen' => 'required_if:kind,apartment,villa',
+            'electricity_meter_number' => 'required_if:kind,apartment,villa,office,showroom,commercial_station,storehouse | max:20 ',
+            'water_meter_number' => 'required_if:kind,apartment,villa,office,showroom,commercial_station,storehouse | max:20  ',
+            'images' => 'required | array',
         ]);
         if (!$validator->fails()) {
             $apartment = new Apartment();
@@ -77,8 +82,6 @@ class ApartmentController extends Controller
                 $request->input('kind') == 'apartment' ||
                 $request->input('kind') == 'villa'
             ) {
-                $apartment->apartment_date_added = Carbon::parse($request->input('date'));
-                $apartment->ac_type = $request->input('conditioning');
 
                 if ($request->input('kind') == 'apartment') {
                     $apartment->floor_number = $request->input('floor');
@@ -91,8 +94,12 @@ class ApartmentController extends Controller
                 $apartment->furnishing_condition = $request->input('furnishing_condition');
                 $apartment->parking = $request->input('parking');
                 $apartment->type_of_kitchen = $request->input('kitchen');
+            }
+            if ($request->input('kind') != 'a_land') {
                 $apartment->electricity_meter_number = $request->input('electricity_meter_number');
                 $apartment->water_meter_number = $request->input('water_meter_number');
+                $apartment->ac_type = $request->input('conditioning');
+                $apartment->apartment_date_added = Carbon::parse($request->input('date'));
             }
             $apartment->property_owner_id = auth('owner')->user()->id;
             $isSaved = $apartment->save();
@@ -143,7 +150,11 @@ class ApartmentController extends Controller
      */
     public function edit(Apartment $apartment)
     {
-        return view('dashboard.owner.apartment.edit', ['apartment' => $apartment]);
+        if ($apartment->kind == 'office' || $apartment->kind == 'showroom' || $apartment->kind == 'commercial_station' || $apartment->kind == 'storehouse') {
+            return view('dashboard.owner.apartment.commercial.edit', ['apartment' => $apartment]);
+        } else {
+            return view('dashboard.owner.apartment.edit', ['apartment' => $apartment]);
+        }
     }
 
     /**
@@ -155,7 +166,7 @@ class ApartmentController extends Controller
      */
     public function update(Request $request, Apartment $apartment)
     {
-        // dd($request->kind);
+
         $validator = Validator($request->all(), [
             'kind' => 'required | string ',
             'name' => 'required | string |max:50',
@@ -164,19 +175,19 @@ class ApartmentController extends Controller
             'space' => 'required | numeric  ',
             'date' => 'required_if:kind,apartment,villa',
             'conditioning' => 'required_if:kind,apartment,villa | string | max:50 ',
-            'floor' => 'required_if:kind,apartment|numeric ',
-            'bedroom' => 'required_if:kind,apartment,villa | numeric ',
-            'bathroom' => 'required_if:kind,apartment,villa | numeric ',
-            'councils' => 'required_if:kind,apartment,villa | numeric ',
-            'lounges' => 'required_if:kind,apartment,villa  ',
-            'furnishing_condition' => 'required_if:kind,apartment,villa | in:yes,no ',
-            'parking' => 'required_if:kind,apartment,villa | in:yes,no ',
-            'kitchen' => 'required_if:kind,apartment,villa | in:open,closed ',
-            'electricity_meter_number' => 'required_if:kind,apartment,villa | numeric | digits_between:1,20 ',
-            'water_meter_number' => 'required_if:kind,apartment,villa | numeric | digits_between:1,20  ',
+            'floor' => 'required_if:kind,apartment|numeric',
+            'bedroom' => 'required_if:kind,apartment,villa | numeric',
+            'bathroom' => 'required_if:kind,apartment,villa | numeric',
+            'councils' => 'required_if:kind,apartment,villa | numeric',
+            'lounges' => 'required_if:kind,apartment,villa',
+            'furnishing_condition' => 'required_if:kind,apartment,villa',
+            'parking' => 'required_if:kind,apartment,villa',
+            'kitchen' => 'required_if:kind,apartment,villa',
+            'electricity_meter_number' => 'required_if:kind,apartment,villa,office,showroom,commercial_station,storehouse | numeric | digits_between:1,20 ',
+            'water_meter_number' => 'required_if:kind,apartment,villa,office,showroom,commercial_station,storehouse | numeric | digits_between:1,20  ',
+            // 'images' => 'required | array',
         ]);
         if (!$validator->fails()) {
-            // $apartment = new Apartment();
             $apartment->kind = $request->input('kind');
             $apartment->apartment_name = $request->input('name');
             $apartment->city = $request->input('city');
@@ -187,8 +198,6 @@ class ApartmentController extends Controller
                 $request->input('kind') == 'apartment' ||
                 $request->input('kind') == 'villa'
             ) {
-                $apartment->apartment_date_added = Carbon::parse($request->input('date'));
-                $apartment->ac_type = $request->input('conditioning');
 
                 if ($request->input('kind') == 'apartment') {
                     $apartment->floor_number = $request->input('floor');
@@ -201,8 +210,12 @@ class ApartmentController extends Controller
                 $apartment->furnishing_condition = $request->input('furnishing_condition');
                 $apartment->parking = $request->input('parking');
                 $apartment->type_of_kitchen = $request->input('kitchen');
+            }
+            if ($request->input('kind') != 'a_land') {
                 $apartment->electricity_meter_number = $request->input('electricity_meter_number');
                 $apartment->water_meter_number = $request->input('water_meter_number');
+                $apartment->ac_type = $request->input('conditioning');
+                $apartment->apartment_date_added = Carbon::parse($request->input('date'));
             }
             $apartment->property_owner_id = auth('owner')->user()->id;
             $isSaved = $apartment->save();
@@ -250,7 +263,8 @@ class ApartmentController extends Controller
         $query = $request->get('search');
         if ($request->ajax()) {
             $output = "";
-            $apartments = Apartment::where('apartment_name', 'like', '%' . $query . '%')
+            $apartments = Apartment::where('property_owner_id', auth('owner')->user()->id)
+                ->where('apartment_name', 'like', '%' . $query . '%')
                 ->orWhere('city', 'like', '%' . $query . '%')
                 ->orWhere('address', 'like', '%' . $query . '%')
                 ->orWhere('space', 'like', '%' . $query . '%')
@@ -269,19 +283,20 @@ class ApartmentController extends Controller
 
                 foreach ($apartments as $apartment) {
                     $output .= '<div class="col" id="div_content" style=" padding: 0;">' .
-                        ' <div class="card mb-3" id="div_card" style="">' .
-                        ' <div class="row g-0">' .
-                        ' <div class="col-md-4">' .
-                        '<img src="https://via.placeholder.com/200" style="height: 100%;" class="img-fluid rounded-start" alt="...">' .
-                        '</div>' .
+                        '<div class="card mb-3" id="div_card" style="">' .
+                        '<div class="row g-0">' .
+                        '<div class="col-md-4">' .
+                        '<img src="' . asset($apartment->images[0]->url ?? 'https://via.placeholder.com/200') . '" style="height: 100%;" class="img-fluid rounded-start" alt="...">'
+                        . '</div>' .
                         '<div class="col-md-8">' .
                         '<div class="card-body">' .
                         '<div style="display: flex; justify-content: space-between;">' .
-                        ' <h5 class="card-title text-start ">' . $apartment->apartment_name . '</h5>' .
+                        ' <h5 class="card-title text-start ">' . '<a href="' . route('apartment.show', $apartment->id) . '">' . $apartment->apartment_name . '</a>' . '</h5>' .
                         '<a href="' . route('apartment.edit', $apartment->id) . '"  style="text-decoration: none; color: #17191b;">Edit</a>' .
                         '</div>' .
                         '<ul class="text-start" style="list-style-type: none; padding: 0;">
-                                            <li style="margin-bottom: 5px;">
+                                            ' . (($apartment->kind == 'villa' || $apartment->kind == 'apartment') ?
+                            ' <li style="margin-bottom: 5px;">
                                                 <p class="card-text text-start">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 384 512">
@@ -291,8 +306,8 @@ class ApartmentController extends Controller
                                                     </svg>
                                                    ' . $apartment->city . ' , ' . $apartment->address . '
                                                 </p>
-                                            </li>
-                                            <li style="margin-bottom: 5px;">
+                                            </li>' : '');
+                    '<li style="margin-bottom: 5px;">
                                                 <p class="card-text text-start">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         viewBox="0 0 640 512">
@@ -300,7 +315,7 @@ class ApartmentController extends Controller
                                                         <path
                                                             d="M480 48c0-26.5-21.5-48-48-48H336c-26.5 0-48 21.5-48 48V96H224V24c0-13.3-10.7-24-24-24s-24 10.7-24 24V96H112V24c0-13.3-10.7-24-24-24S64 10.7 64 24V96H48C21.5 96 0 117.5 0 144v96V464c0 26.5 21.5 48 48 48H304h32 96H592c26.5 0 48-21.5 48-48V240c0-26.5-21.5-48-48-48H480V48zm96 320v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM240 416H208c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zM128 400c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V368c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM560 256c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H528c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32zM256 176v32c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM112 160c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H80c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32zM256 304c0 8.8-7.2 16-16 16H208c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32zM112 320H80c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16zm304-48v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V272c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16zM400 64c8.8 0 16 7.2 16 16v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V80c0-8.8 7.2-16 16-16h32zm16 112v32c0 8.8-7.2 16-16 16H368c-8.8 0-16-7.2-16-16V176c0-8.8 7.2-16 16-16h32c8.8 0 16 7.2 16 16z" />
                                                     </svg>
-                                                    0
+                                                    ' . $apartment->building->apartment_name ?? 0 . '
                                                 </p>
                                             </li>
                                             <li style="margin-bottom: 5px;">
@@ -317,14 +332,16 @@ class ApartmentController extends Controller
                                         </ul>' . '</div>' . '</div>' . '</div>' . '</div>' . '</div>';
                 }
             } else {
-                $output = '<tr><td align="center" colspan="4">No Data Found</td></tr>';
+                $output = '<p style="margin-left:auto;margin-right:auto;font-size:18px;">No Data Found</p>';
             }
-            $data = array(
-                'table_data'  => $output,
-                'total_data'  => $total_row
-            );
+            return response($output);
 
-            echo json_encode($data);
+            // $data = array(
+            //     'table_data'  => $output,
+            //     'total_data'  => $total_row
+            // );
+
+            // echo json_encode($data);
         }
     }
 
@@ -355,9 +372,9 @@ class ApartmentController extends Controller
 
     function updateApartment(Request $request, $id)
     {
-        if ($request->typeData == 'compound') {
+        if ($request->data_type == 'compound') {
             $apartment = Apartment::findOrFail($id);
-            $apartment->compound_id = $request->id;
+            $apartment->compound_id = $request->data_id;
             $isSaved = $apartment->save();
             return response()->json(
                 [
@@ -365,9 +382,9 @@ class ApartmentController extends Controller
                 ],
                 $isSaved ? Response::HTTP_CREATED : Response::HTTP_BAD_REQUEST,
             );
-        } else if ($request->typeData == 'building') {
+        } else if ($request->data_type == 'building') {
             $apartment = Apartment::findOrFail($id);
-            $apartment->building_id = $request->id;
+            $apartment->building_id = $request->data_id;
             $isSaved = $apartment->save();
             return response()->json(
                 [

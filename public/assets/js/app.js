@@ -111,16 +111,18 @@ function addApartment(id) {
     formData.append("space", document.getElementById("space").value);
     formData.append("date", document.getElementById("dateId").value);
     formData.append("conditioning",document.querySelector('[name="conditioning"]:checked').value);
-    formData.append("floor", document.getElementById("floorid").value);
-    formData.append("bedroom", document.getElementById("bedroomId").value);
-    formData.append("bathroom", document.getElementById("bathroomId").value);
-    formData.append("councils", document.getElementById("councils").value);
-    formData.append("lounges", document.getElementById("lounges").value);
     formData.append("electricity_meter_number",document.getElementById("electricity_meter_number").value);
     formData.append("water_meter_number",document.getElementById("water_meter_number").value);
-    formData.append("furnishing_condition",document.querySelector('[name="furnishing_condition"]:checked').value);
-    formData.append("parking",document.querySelector('[name="parking"]:checked').value);
-    formData.append("kitchen",document.querySelector('[name="kitchen"]:checked').value);
+    if(document.querySelector('[name="kind"]:checked').value == 'apartment' || document.querySelector('[name="kind"]:checked').value == 'villa'){
+        formData.append("floor", document.getElementById("floorid").value);
+        formData.append("bedroom", document.getElementById("bedroomId").value);
+        formData.append("bathroom", document.getElementById("bathroomId").value);
+        formData.append("councils", document.getElementById("councils").value);
+        formData.append("lounges", document.getElementById("lounges").value);
+        formData.append("furnishing_condition",document.querySelector('[name="furnishing_condition"]:checked').value);
+        formData.append("parking",document.querySelector('[name="parking"]:checked').value);
+        formData.append("kitchen",document.querySelector('[name="kitchen"]:checked').value);
+    }
 
     for (const image of images) {
         formData.append("images[]", image);
@@ -157,11 +159,9 @@ function addRental() {
     for (const image of images) {
         formData.append("images[]", image);
     }
-    // const button = document.getElementById("button");
-    // console.log(button.innerHTML);
 
     formData.append("_method", "POST");
-    store("/rentals", formData, "/apartment");
+    store("/rental", formData, "/apartment");
 
 }
 

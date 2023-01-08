@@ -10,6 +10,11 @@ use Illuminate\Http\Request;
 
 class EstatesController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+
     public function compoundIndex()
     {
         $compounds = Compound::paginate(10);

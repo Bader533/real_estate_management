@@ -15,10 +15,12 @@ return new class extends Migration
     {
         Schema::create('property_owners', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('company_name')->nullable();
-            $table->string('email');
+            $table->string('name', 300);
+            $table->string('company_name', 300)->nullable();
+            $table->string('email', 300);
             $table->string('phone');
+            $table->string('verification_code')->nullable();
+            $table->boolean('verified')->default(false);
             $table->string('password');
             $table->timestamps();
         });

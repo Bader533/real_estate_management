@@ -2,7 +2,6 @@
 
 @section('css')
 
-<link href="netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -46,8 +45,52 @@
 
         <div class="card-body pt-0">
             <div class="container text-center">
-                <div class="row row-cols-2" id="div_content_data">
-                    @foreach ($tenants as $tenant)
+                <div class="row row-cols-2">
+                    <table class="table align-middle table-row-dashed fs-6 gy-5" id="kt_customers_table">
+
+                        <thead>
+
+                            <tr class="text-gray-400 fw-bolder fs-7 text-uppercase gs-0">
+                                <th class="">{{ __('site.name') }}</th>
+                                <th class="">{{ __('site.email') }}</th>
+                                <th class="">{{ __('site.phone') }}</th>
+                                <th class="">{{ __('site.id_number') }}</th>
+                                <th class="">{{ __('site.nationality') }}</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody class="" id="div_content_data">
+                            @foreach ($tenants as $tenant)
+                            <tr>
+
+                                <td>
+                                    {{ $tenant->name }}
+                                </td>
+
+                                <td>
+                                    {{ $tenant->email }}
+                                </td>
+
+                                <td>
+                                    {{ $tenant->phone }}
+                                </td>
+
+                                <td>
+                                    {{ $tenant->ssl }}
+                                </td>
+
+                                <td>
+                                    {{ $tenant->nationality }}
+                                </td>
+
+
+                            </tr>
+                            @endforeach
+                        </tbody>
+
+                    </table>
+                    {{-- @foreach ($tenants as $tenant)
                     <div id="tenant-container">
 
                         <div class="tenantHeader">
@@ -76,7 +119,7 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                    @endforeach --}}
                 </div>
             </div>
             <div class="container">
@@ -95,8 +138,7 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('assets/js/app.js') }}"></script>
-<script src="{{ asset('assets/js/crud.js') }}"></script>
+
 <script>
     $("body").on("keyup", "#search", function() {
             let text = $("#search").val();

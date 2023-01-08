@@ -17,9 +17,9 @@ class PropertyOwnerSeeder extends Seeder
     public function run()
     {
         PropertyOwner::create([
-            'name' => 'bader',
-            'email' => 'bader@app.com',
-            'phone' => '999999989',
+            'name' => 'bader2',
+            'email' => 'bader2@app.com',
+            'phone' => '999999922',
             'password' => Hash::make(12345),
         ]);
     }
