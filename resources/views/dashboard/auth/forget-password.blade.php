@@ -16,10 +16,7 @@
 
     <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>login</title>
-    <style>
-
-    </style>
+    <title>forget password</title>
 </head>
 
 <body>
@@ -32,28 +29,20 @@
                     </a>
 
                     <form>
-                        {{-- @csrf --}}
                         {{-- begin::email --}}
                         <div class="form-floating mb-3">
                             <input type="email" class="form-control" id="email" name="email" required>
                             <label for="email">Email</label>
                         </div>
                         {{-- end::email --}}
-
-                        {{-- begin::password --}}
-                        <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="password" name="password" required>
-                            <label for="password">Password</label>
-                        </div>
-                        {{-- end::password --}}
-
-                        <a href="{{route('password.forget')}}" class="password_forget">Forgot Password ?</a>
                         <br>
-                        <button type="button" onclick="login()">Submit</button>
+
+                        <button type="button" onclick="sendResetPassword()">Request New Password</button>
                     </form><br>
-                    <p class="footer">Don't Have An Account ? <a class="register" href="{{route('register.create')}}">
+                    {{-- <p class="footer">Don't Have An Account ? <a class="register"
+                            href="{{route('register.create')}}">
                             Sign Up
-                            Now </a></p>
+                            Now </a></p> --}}
                 </div>
                 <div class="two">
                     <p>Welcome to ByatData</p>
@@ -73,29 +62,19 @@
     <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-
     <script>
-        function login() {
-                        axios.post('/login', {
-                            email: document.getElementById('email').value,
-                            password: document.getElementById('password').value,
-                            guard: '{{$guard}}',
-                        })
-                        .then(function (response) {
-                            //2xx
-                            console.log(response);
-                            // console.log(email);
-                            toastr.success(response.data.message);
-                            window.location.href = '/dashboard';
-                        })
-                        .catch(function (error) {
-                            //4xx - 5xx
-                            console.log(error.response.data.message);
-                            toastr.error(error.response.data.message);
-
-                        });
-                    }
+        function sendResetPassword(){
+        	axios.post('/forgot-password', {
+        	    email: document.getElementById('email').value,
+        	}).then(function (response) {
+        	  	toastr.success(response.data.message)
+        	     		// window.location.href = '/cms/store/login';
+        	}).catch(function (error) {
+        	    toastr.error(error.response.data.message)
+        	});
+        }
     </script>
+
 
 
 </body>

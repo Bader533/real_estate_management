@@ -49,7 +49,6 @@ class Controller extends BaseController
             $compounds = auth('owner')->user()->compounds()->count();
             $buildings = auth('owner')->user()->buildings()->count();
             $apartments = auth('owner')->user()->apartments()->count();
-            // $tenants = auth('owner')->user()->tenants()->count();
             $tenants = Tenant::with('contract')->whereHas('contract', function ($query) {
                 $query->where('property_owner_id', auth('owner')->user()->id);
             })->count();

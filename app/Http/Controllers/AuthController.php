@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Password;
+use Illuminate\Auth\Events\PasswordReset;
 use Symfony\Component\HttpFoundation\Response;
 
 class AuthController extends Controller
@@ -81,8 +83,6 @@ class AuthController extends Controller
             $isSaved = $propertyOwner->save();
             if ($isSaved) {
                 Mail::to($propertyOwner)->queue(new VerifyEmail($propertyOwner, $code));
-                // return
-                //     view('dashboard.auth.verification-code', ['owner_id' => $propertyOwner->id]);
                 return redirect()->route('verify.account', $propertyOwner->id);
             }
         } else {
@@ -94,18 +94,11 @@ class AuthController extends Controller
     }
     public function showVerificationCode($id)
     {
-        // dd($id);
         return view('dashboard.auth.verification-code', ['owner_id' => $id]);
     }
 
     public function verificationCode(Request $request, $id)
     {
-        // $validator = Validator($request->all(), [
-        //     'data' => "required",
-        // ]);
-
-        // if (!$validator->fails()) {
-
         $verification = implode('', $request->verify);
         $owner = PropertyOwner::where('id', $id)->first();
         if (!is_null($owner->verification_code)) {
@@ -128,12 +121,6 @@ class AuthController extends Controller
                 'message' =>  'Failed Add Property Owner',
             ],  Response::HTTP_BAD_REQUEST);
         }
-        // } else {
-        //     return response()->json(
-        //         ['message' => $validator->getMessageBag()->first()],
-        //         Response::HTTP_BAD_REQUEST,
-        //     );
-        // }
     }
 
     // logout
@@ -143,5 +130,65 @@ class AuthController extends Controller
         Auth::guard($guard)->logout();
         $request->session()->invalidate();
         return redirect()->route('dashboard.login', $guard);
+    }
+
+    public function showForgetPassword(Request $request)
+    {
+        return response()->view('dashboard.auth.forget-password');
+    }
+
+    public function emailForgetPassword(Request $request)
+    {
+        $validator = Validator($request->all(), [
+            'email' => 'required|email',
+        ]);
+        if (!$validator->fails()) {
+            $status = Password::sendResetLink($request->only('email'));
+            return $status === Password::RESET_LINK_SENT
+                ? response()->json(['message' => __($status)], Response::HTTP_OK)
+                : response()->json(['message' => __($status)], Response::HTTP_BAD_REQUEST);
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
+        }
+    }
+
+    public function resetPassword(Request $request, $token)
+    {
+        return response()->view(
+            'dashboard.auth.recover-password',
+            [
+                'token' => $token,
+                'email' => $request->input('email')
+            ]
+        );
+    }
+
+    public function updatePassword(Request $request)
+    {
+        $validator = Validator($request->all(), [
+            'token' => 'required',
+            'email' => 'required | email',
+            'password' => 'required | confirmed',
+            // 'guard' => 'required|in:admin,store'
+        ]);
+
+        if (!$validator->fails()) {
+            // $broker = $request->get('guard') == 'admin' ? 'admins' : 'stores';
+
+            $status = Password::reset(
+                $request->all(),
+                function ($user, $password) {
+                    $user->password = Hash::make($password);
+                    $user->save();
+                    event(new PasswordReset($user));
+                }
+            );
+
+            return $status === Password::PASSWORD_RESET
+                ? response()->json(['message' => __($status)], Response::HTTP_OK)
+                : response()->json(['message' => __($status)], Response::HTTP_BAD_REQUEST);
+        } else {
+            return response()->json(['message' => $validator->getMessageBag()->first()], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

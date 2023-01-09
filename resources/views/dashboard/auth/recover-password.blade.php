@@ -16,10 +16,7 @@
 
     <link href="{{asset('assets/plugins/global/plugins.bundle.css')}}" rel="stylesheet" type="text/css" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>login</title>
-    <style>
-
-    </style>
+    <title>reset password</title>
 </head>
 
 <body>
@@ -30,30 +27,29 @@
                     <a class="navbar-brand" href="#">
                         <img src="{{asset('assets/landing/images/Betaldata.png')}}">
                     </a>
-
                     <form>
-                        {{-- @csrf --}}
-                        {{-- begin::email --}}
-                        <div class="form-floating mb-3">
-                            <input type="email" class="form-control" id="email" name="email" required>
-                            <label for="email">Email</label>
-                        </div>
-                        {{-- end::email --}}
-
                         {{-- begin::password --}}
                         <div class="form-floating mb-3">
-                            <input type="password" class="form-control" id="password" name="password" required>
-                            <label for="password">Password</label>
+                            <input class="form-control" type="password" placeholder="Password" id="password"
+                                autocomplete="new-password" required />
+
+                            <label for="password">password</label>
                         </div>
                         {{-- end::password --}}
 
-                        <a href="{{route('password.forget')}}" class="password_forget">Forgot Password ?</a>
+                        {{-- begin::confirm password --}}
+                        <div class="form-floating mb-3">
+                            <input class="form-control" type="password" placeholder="Password Confirmation"
+                                id="password_confirmation" name="password_confirmation" autocomplete="new-password"
+                                required />
+                            <label for="confirm_password">Confirm Password</label>
+                        </div>
+                        {{-- end::confirm password --}}
                         <br>
-                        <button type="button" onclick="login()">Submit</button>
+
+                        <button type="button" onclick="resetPassword()">Reset Password</button>
                     </form><br>
-                    <p class="footer">Don't Have An Account ? <a class="register" href="{{route('register.create')}}">
-                            Sign Up
-                            Now </a></p>
+
                 </div>
                 <div class="two">
                     <p>Welcome to ByatData</p>
@@ -73,30 +69,21 @@
     <script src="{{asset('assets/js/custom/authentication/sign-in/general.js')}}"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios@1.1.2/dist/axios.min.js"></script>
     <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
-
     <script>
-        function login() {
-                        axios.post('/login', {
-                            email: document.getElementById('email').value,
-                            password: document.getElementById('password').value,
-                            guard: '{{$guard}}',
-                        })
-                        .then(function (response) {
-                            //2xx
-                            console.log(response);
-                            // console.log(email);
-                            toastr.success(response.data.message);
-                            window.location.href = '/dashboard';
-                        })
-                        .catch(function (error) {
-                            //4xx - 5xx
-                            console.log(error.response.data.message);
-                            toastr.error(error.response.data.message);
-
-                        });
-                    }
+        function resetPassword(){
+            axios.post('/reset-password', {
+                token: '{{$token}}',
+                email: '{{$email}}',
+                password: document.getElementById('password').value,
+                password_confirmation: document.getElementById('password_confirmation').value,
+            }).then(function (response) {
+                toastr.success(response.data.message)
+                window.location.href = '/owner/login';
+            }).catch(function (error) {
+                toastr.error(error.response.data.message)
+            });
+        }
     </script>
-
 
 </body>
 
