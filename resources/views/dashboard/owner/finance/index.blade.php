@@ -122,7 +122,7 @@
                                 fill="black" />
                         </svg>
                     </span>
-                    <input type="text" data-kt-customer-table-filter="search" id="search"
+                    <input type="text" onkeyup="myFunction()" data-kt-customer-table-filter="search" id="search"
                         class="form-control form-control-solid w-250px ps-15"
                         placeholder="{{ __('site.search_tenants') }}" />
                 </div>
@@ -212,25 +212,41 @@
 @endsection
 
 @section('js')
-<script src="{{ asset('assets/js/app.js') }}"></script>
-<script src="{{ asset('assets/js/crud.js') }}"></script>
+{{-- <script src="{{ asset('assets/js/app.js') }}"></script>
+<script src="{{ asset('assets/js/crud.js') }}"></script> --}}
 <script>
-    $("body").on("keyup", "#search", function() {
-            let text = $("#search").val();
-            if (text != null) {
-                $.ajax({
-                    data: {
-                        search: text
-                    },
-                    url: "{{ route('finance.live.search') }}",
-                    method: 'GET',
-                    dataType: 'json',
-                    success: function(data) {
-                        $('#div_table_data').html(data.table_data);
-                    }
-                }); //end ajax
+    function myFunction() {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search");
+        filter = input.value.toUpperCase();
+        table = document.getElementById("kt_customers_table");
+        tr = table.getElementsByTagName("tr");
+        for (i = 0; i < tr.length; i++) { td=tr[i].getElementsByTagName("td")[0]; if (td) { txtValue=td.textContent ||
+            td.innerText;
+            if (txtValue.toUpperCase().indexOf(filter)> -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
             }
-        }); //end function
+            }
+        }
+    }
+    // $("body").on("keyup", "#search", function() {
+    //         let text = $("#search").val();
+    //         if (text != null) {
+    //             $.ajax({
+    //                 data: {
+    //                     search: text
+    //                 },
+    //                 url: "{{ route('finance.live.search') }}",
+    //                 method: 'GET',
+    //                 dataType: 'json',
+    //                 success: function(data) {
+    //                     $('#div_table_data').html(data.table_data);
+    //                 }
+    //             }); //end ajax
+    //         }
+    //     }); //end function
 
         function performDestroy(id, reference) {
             confirmDestroy('/compound', id, reference);
